@@ -6,5 +6,5 @@ RUN mvn clean package -DskipTests
 
 FROM eclipse-temurin:21-jdk
 VOLUME /tmp
-COPY --from=build /app/target/api-food-0.0.1.jar /app.jar
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+COPY --from=build /app/target/api-orders.jar /api-orders
+ENTRYPOINT ["java", "-jar", "/api-orders"]
