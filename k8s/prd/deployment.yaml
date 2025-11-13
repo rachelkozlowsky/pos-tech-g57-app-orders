@@ -14,12 +14,12 @@ spec:
     spec:
       containers:
         - name: api-food-orders
-          image: postechf57/pos-tech-g57-app-orders:latest
+          image: postechf57/pos-tech-g57-api:latest
           ports:
             - containerPort: 8080
           envFrom:
             - configMapRef:
-                name: api-config
+                name: api-config-orders
             - secretRef:
                 name: api-secret
           resources:

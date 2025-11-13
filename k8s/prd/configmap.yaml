@@ -1,7 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: api-config
+  name: api-config-orders
+data:
+  PAYMENT_INTEGRATION_HOST: "https://api.mercadopago.com/"
 ---
 apiVersion: v1
 kind: Secret

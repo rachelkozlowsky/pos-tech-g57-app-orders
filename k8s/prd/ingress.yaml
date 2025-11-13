@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: api-food-ingress
+  name: api-food-orders-ingress
   annotations:
 
     kubernetes.io/ingress.class: alb
@@ -24,8 +24,7 @@ metadata:
       stickiness.enabled=false,
       deregistration_delay.timeout_seconds=10,
       load_balancing.algorithm.type=round_robin
-
-    #pos-tech-g57-app-users
+    
     # Tags para identificação - importante para VPC Link descobrir o ALB
     alb.ingress.kubernetes.io/tags: |
       Name=postech-g57-api-food-orders-alb-private,
@@ -53,20 +52,20 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: api-food-service
+            name: api-food-orders-service
             port:
               number: 80
       - path: /actuator
         pathType: Prefix
         backend:
           service:
-            name: api-food-service
+            name: api-food-orders-service
             port:
               number: 80
       - path: /health
         pathType: Prefix
         backend:
           service:
-            name: api-food-service
+            name: api-food-orders-service
             port:
               number: 80
