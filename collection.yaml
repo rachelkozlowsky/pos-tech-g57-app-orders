@@ -1,0 +1,1947 @@
+_type: export
+__export_format: 4
+__export_date: 2025-05-30T01:01:03.514Z
+__export_source: insomnia.desktop.app:v2023.2.2
+resources:
+  - _id: req_c27ad828ee3e4b0abcff7c32c3983fd7
+    parentId: fld_1f0845d2f2d945369bd80a854c003f78
+    modified: 1748557799919
+    created: 1748557763601
+    url: http://localhost:8080/v1/categories
+    name: 01 - Buscar Categorias
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: accept
+        value: "*/*"
+    authentication: {}
+    metaSortKey: -1748557763605.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_1f0845d2f2d945369bd80a854c003f78
+    parentId: fld_f1c803e401e9457ebe5dcfa43163c652
+    modified: 1748557763600
+    created: 1748557763600
+    name: 01 - CADASTRO DE PRODUTO
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1748557763600
+    _type: request_group
+  - _id: fld_f1c803e401e9457ebe5dcfa43163c652
+    parentId: wrk_63a8719845814b358fcb37c0b557a496
+    modified: 1748557763598
+    created: 1748557763598
+    name: APRESENTAÇÃO
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1748557763598
+    _type: request_group
+  - _id: wrk_63a8719845814b358fcb37c0b557a496
+    parentId: null
+    modified: 1746053680368
+    created: 1746053680368
+    name: FIAP-G57
+    description: ""
+    scope: design
+    _type: workspace
+  - _id: req_f8d076661a42431fbbeca02912435e06
+    parentId: fld_1f0845d2f2d945369bd80a854c003f78
+    modified: 1748562676346
+    created: 1748557763602
+    url: http://localhost:8080/v1/products
+    name: 02 - Cadastro de Produto
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: >-
+        {
+            "name": "sorvete",
+            "description": "sobremesa",
+            "price": 6.99,
+            "images": [
+                {
+                    "url": "https://api-middleware-mcd.mcdonaldscupones.com/media/image/product$kzXCTbnv/200/200/original?country=br"
+                }
+            ],
+            "category": "dessert"
+        }
+    parameters: []
+    headers:
+      - name: accept
+        value: "*/*"
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: basic
+      disabled: false
+      username: admin
+      password: admin
+    metaSortKey: -1748557763604.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_473645992d484a33a25f26b1685cd78b
+    parentId: fld_1f0845d2f2d945369bd80a854c003f78
+    modified: 1748558074601
+    created: 1748557763604
+    url: http://localhost:8080/v1/products/:productId
+    name: 03 - Atualizar Produto
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: >-
+        {
+        	"name": "Novo Brabo ClubHouse",
+        	"description": "Os novos sanduíches contém dois hambúrgueres de carne 100% bovina. O peso total da carne in natura (somando-se os dois hambúrgueres) aumentou em 51,7% / 77,6 g, passando de 150 g para 227,6 g, em comparação com o peso total de carne in natura (um hambúrger) presente nas versões anteriores, méquinese, a exclusiva maionese especial com sabor de carne defumada, alface e tomate, fatias de bacon, queijo processado sabor emental, molho especial e cebola ao molho shoyu, tudo isso no pão tipo brioche trazendo uma explosão de sabores pros seus dias de glória!",
+        	"price": 59.99,
+        	"active": true,
+        	"images": [
+        		{
+        			"url": "https://api-middleware-mcd.mcdonaldscupones.com/media/image/product$k6X0kr6l/200/200/original?country=br"
+        		}
+        	],
+        	"category": "SNACK"
+        }
+    parameters:
+      - id: pair_9a8902f965094b6db93ef34ea2d94ada
+        name: productId
+        value: 734d02f8-d444-457c-9bb4-46854547bddd
+        description: ""
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: basic
+      useISO88591: false
+      disabled: false
+      username: admin
+      password: admin
+    metaSortKey: -1748557763604
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_2fa6ac66d09042ff920e1a160209936f
+    parentId: fld_1f0845d2f2d945369bd80a854c003f78
+    modified: 1748558057126
+    created: 1748557763605
+    url: http://localhost:8080/v1/products/:productId
+    name: 04 - Buscar Produto Por Id
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_31eed602ef2a4b3495a7e78375a28cb2
+        name: productId
+        value: 734d02f8-d444-457c-9bb4-46854547bddd
+        description: ""
+    headers: []
+    authentication: {}
+    metaSortKey: -1748557763577.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_e5077744f32942b297bdf35bd13a68dc
+    parentId: fld_1f0845d2f2d945369bd80a854c003f78
+    modified: 1748557807722
+    created: 1748557763606
+    url: http://localhost:8080/v1/products/categories/SNACK
+    name: 05 - Buscar Produtos Por Categoria
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: accept
+        value: "*/*"
+    authentication: {}
+    metaSortKey: -1748557763564.25
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_c6c9e76c3aa542c0a9bf013bb370b2eb
+    parentId: fld_1f0845d2f2d945369bd80a854c003f78
+    modified: 1748558113393
+    created: 1748557763607
+    url: http://localhost:8080/v1/products/:productId
+    name: 06 - Excluir Produto Por ID
+    description: ""
+    method: DELETE
+    body: {}
+    parameters:
+      - id: pair_28439a111f444bf78c1a3aaa791bfa53
+        name: productId
+        value: 734d02f8-d444-457c-9bb4-46854547bddd
+        description: ""
+    headers: []
+    authentication:
+      type: basic
+      useISO88591: false
+      disabled: false
+      username: admin
+      password: admin
+    metaSortKey: -1748557763551
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_46ee6fcb4a7243f9a6d7efee71ba19d0
+    parentId: fld_96dc1c59c6514c9dba85516f90da7d8e
+    modified: 1748557763608
+    created: 1748557763608
+    url: http://localhost:8080/v1/clients
+    name: 01 - Cadastrar Cliente
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: "{\r
+
+        \    \"cpf\": \"582.545.720-89\",\r
+
+        \    \"name\": \"Abdias Toledo\",\r
+
+        \    \"email\": \"abdias@gmail.com\",\r
+
+        \    \"phone\": \"619494979494\"\r
+
+        }"
+    parameters: []
+    headers:
+      - name: Accept
+        value: application/json, text/plain, */*
+      - name: Accept-Language
+        value: pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+      - name: Connection
+        value: keep-alive
+      - name: Content-Type
+        value: application/json
+      - name: Origin
+        value: http://localhost:3000
+      - name: Referer
+        value: http://localhost:3000/
+      - name: Sec-Fetch-Dest
+        value: empty
+      - name: Sec-Fetch-Mode
+        value: cors
+      - name: Sec-Fetch-Site
+        value: same-site
+      - name: User-Agent
+        value: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like
+          Gecko) Chrome/136.0.0.0 Safari/537.36
+      - name: sec-ch-ua
+        value: '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"'
+      - name: sec-ch-ua-mobile
+        value: ?0
+      - name: sec-ch-ua-platform
+        value: '"Windows"'
+    authentication: {}
+    metaSortKey: -1748557763608
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_96dc1c59c6514c9dba85516f90da7d8e
+    parentId: fld_f1c803e401e9457ebe5dcfa43163c652
+    modified: 1748557790346
+    created: 1748557763608
+    name: 02 - FLUXO DE PEDIDO
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1748557763550
+    _type: request_group
+  - _id: req_4ee07a86b1354ea0a20c128cbde87faa
+    parentId: fld_96dc1c59c6514c9dba85516f90da7d8e
+    modified: 1748558183917
+    created: 1748557763609
+    url: http://localhost:8080/v1/clients/:cpf
+    name: 02 - Identificação do Cliente via CPF
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_0734f0417f60446da0f89e175e1643b9
+        name: cpf
+        value: 582.545.720-89
+        description: ""
+    headers:
+      - name: Accept
+        value: application/json, text/plain, */*
+      - name: Accept-Language
+        value: pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+      - name: Connection
+        value: keep-alive
+      - name: Origin
+        value: http://localhost:3000
+      - name: Referer
+        value: http://localhost:3000/
+      - name: Sec-Fetch-Dest
+        value: empty
+      - name: Sec-Fetch-Mode
+        value: cors
+      - name: Sec-Fetch-Site
+        value: same-site
+      - name: User-Agent
+        value: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like
+          Gecko) Chrome/136.0.0.0 Safari/537.36
+      - name: sec-ch-ua
+        value: '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"'
+      - name: sec-ch-ua-mobile
+        value: ?0
+      - name: sec-ch-ua-platform
+        value: '"Windows"'
+    authentication: {}
+    metaSortKey: -1748557763558
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_6b265ecba48a4116a7bb3c3b0f8dcfad
+    parentId: fld_96dc1c59c6514c9dba85516f90da7d8e
+    modified: 1748558130422
+    created: 1748557763610
+    url: http://localhost:8080/v1/products/categories/SNACK
+    name: 03 - Listar Produtos por categoria
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: Accept
+        value: application/json, text/plain, */*
+      - name: Accept-Language
+        value: pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+      - name: Connection
+        value: keep-alive
+      - name: Origin
+        value: http://localhost:3000
+      - name: Referer
+        value: http://localhost:3000/
+      - name: Sec-Fetch-Dest
+        value: empty
+      - name: Sec-Fetch-Mode
+        value: cors
+      - name: Sec-Fetch-Site
+        value: same-site
+      - name: User-Agent
+        value: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like
+          Gecko) Chrome/136.0.0.0 Safari/537.36
+      - name: sec-ch-ua
+        value: '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"'
+      - name: sec-ch-ua-mobile
+        value: ?0
+      - name: sec-ch-ua-platform
+        value: '"Windows"'
+    authentication: {}
+    metaSortKey: -1748557763508
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_1e01e1644d954c7ba5966cef08a282de
+    parentId: fld_96dc1c59c6514c9dba85516f90da7d8e
+    modified: 1748562689973
+    created: 1748557763611
+    url: http://localhost:8080/v1/orders
+    name: 04 - Cadastrar Pedido
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+            "cpfClient": "58254572089",
+            "title": "Lanche",
+            "description": "Lanche",
+            "combo": {
+                "id": null,
+                "snack": [
+                    {
+                        "productId": "cab7033a-0245-401e-a885-d5bb01e77e21",
+                        "quantity": 5
+                    }
+                ],
+                "garnish": [
+        					 {
+                        "productId": "1a3556a3-b4d7-48a5-a3dd-4d1867b0da21",
+                        "quantity": 1
+                    }
+        					
+                    
+                ],
+                "drink": [
+        					 {
+                        "productId": "96896518-7e4c-4679-a192-2d920c364780",
+                        "quantity": 1
+                    }
+                    
+                ],
+                "dessert": [
+        					 {
+                        "productId": "48e2685b-8e7e-4cac-b586-447c345d6fe8",
+                        "quantity": 1
+                    }
+                   
+                ]
+            }
+        }
+    parameters: []
+    headers:
+      - name: Accept
+        value: application/json, text/plain, */*
+      - name: Accept-Language
+        value: pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+      - name: Connection
+        value: keep-alive
+      - name: Content-Type
+        value: application/json
+      - name: Origin
+        value: http://localhost:3000
+      - name: Referer
+        value: http://localhost:3000/
+      - name: Sec-Fetch-Dest
+        value: empty
+      - name: Sec-Fetch-Mode
+        value: cors
+      - name: Sec-Fetch-Site
+        value: same-site
+      - name: User-Agent
+        value: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like
+          Gecko) Chrome/136.0.0.0 Safari/537.36
+      - name: sec-ch-ua
+        value: '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"'
+      - name: sec-ch-ua-mobile
+        value: ?0
+      - name: sec-ch-ua-platform
+        value: '"Windows"'
+    authentication: {}
+    metaSortKey: -1748557763458
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_1ad929999da44a9f836b8fd8d73ff3fd
+    parentId: fld_96dc1c59c6514c9dba85516f90da7d8e
+    modified: 1748563190639
+    created: 1748557763611
+    url: http://localhost:8080/v1/orders/6838f30a98fe7062cf1fd846
+    name: 05 - Atualizar Pedido
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"title": "Lanche",
+        	"description": "Lanche",
+        	"orderStatus": "CREATED",
+        	"client": null,
+        	"combo": {
+        		"id": null,
+        		"snack": [
+        			{
+        				"productId": "cab7033a-0245-401e-a885-d5bb01e77e21",
+        				"quantity": 1
+        			}
+        		],
+        		"garnish": [
+        			{
+        				"productId": "1a3556a3-b4d7-48a5-a3dd-4d1867b0da21",
+        				"quantity": 1
+        			}
+        		],
+        		"drink": [
+        			{
+        				"productId": "96896518-7e4c-4679-a192-2d920c364780",
+        				"quantity": 1
+        			}
+        		],
+        		"dessert": [
+        			{
+        				"productId": "48e2685b-8e7e-4cac-b586-447c345d6fe8",
+        				"quantity": 1
+        			}
+        		]
+        	}
+        }
+    parameters:
+      - id: pair_ec9d2f0f37324eac8ae9e800bb563c6b
+        name: orderId
+        value: 6838e9ab98fe7062cf1fd842
+        description: ""
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: basic
+      useISO88591: false
+      disabled: false
+      username: admin
+      password: admin
+    metaSortKey: -1748557763408
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_2f02fe679ee142ccb839d020e7c8d5f1
+    parentId: fld_96dc1c59c6514c9dba85516f90da7d8e
+    modified: 1748558135194
+    created: 1748557763613
+    url: http://localhost:8080/v1/payments/options
+    name: 06 - Listar Formas de Pagamento
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: Accept
+        value: application/json, text/plain, */*
+      - name: Accept-Language
+        value: pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+      - name: Connection
+        value: keep-alive
+      - name: Origin
+        value: http://localhost:3000
+      - name: Referer
+        value: http://localhost:3000/
+      - name: Sec-Fetch-Dest
+        value: empty
+      - name: Sec-Fetch-Mode
+        value: cors
+      - name: Sec-Fetch-Site
+        value: same-site
+      - name: User-Agent
+        value: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like
+          Gecko) Chrome/136.0.0.0 Safari/537.36
+      - name: sec-ch-ua
+        value: '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"'
+      - name: sec-ch-ua-mobile
+        value: ?0
+      - name: sec-ch-ua-platform
+        value: '"Windows"'
+    authentication: {}
+    metaSortKey: -1748557763358
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_5acc756784de416a8ccef0bff6c7076b
+    parentId: fld_96dc1c59c6514c9dba85516f90da7d8e
+    modified: 1748560378815
+    created: 1748557763614
+    url: http://localhost:8080/v1/payments
+    name: 07 - Gerar QrCode Pagamento
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"clientId": "",
+        	"orderId": "6838e9f398fe7062cf1fd844"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication: {}
+    metaSortKey: -1748557763308
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_f0513873f6a14346b1899b352cdbf88b
+    parentId: fld_96dc1c59c6514c9dba85516f90da7d8e
+    modified: 1748560389467
+    created: 1748557763614
+    url: http://localhost:8080/v1/payments/notification
+    name: 08 - Verificar Confirmação do Pagamento
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"type": "payment",
+        	"action": "payment.update",
+        	"data": {
+        		"id": "113252258204"
+        	}
+        }
+    parameters: []
+    headers:
+      - name: Accept
+        value: application/json, text/plain, */*
+      - name: Accept-Language
+        value: pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+      - name: Connection
+        value: keep-alive
+      - name: Content-Type
+        value: application/json
+      - name: Origin
+        value: http://localhost:3000
+      - name: Referer
+        value: http://localhost:3000/
+      - name: Sec-Fetch-Dest
+        value: empty
+      - name: Sec-Fetch-Mode
+        value: cors
+      - name: Sec-Fetch-Site
+        value: same-site
+      - name: User-Agent
+        value: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like
+          Gecko) Chrome/136.0.0.0 Safari/537.36
+      - name: sec-ch-ua
+        value: '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"'
+      - name: sec-ch-ua-mobile
+        value: ?0
+      - name: sec-ch-ua-platform
+        value: '"Windows"'
+    authentication: {}
+    metaSortKey: -1748557763258
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_4bd188320fae4e539aff0338a24c1dd1
+    parentId: fld_96dc1c59c6514c9dba85516f90da7d8e
+    modified: 1748558855036
+    created: 1748557763615
+    url: http://localhost:8080/v1/orders/6838e1a898fe7062cf1fd840
+    name: 09 - Buscar Pedido Criado por Id
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: Accept
+        value: application/json, text/plain, */*
+      - name: Accept-Language
+        value: pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+      - name: Connection
+        value: keep-alive
+      - name: Origin
+        value: http://localhost:3000
+      - name: Referer
+        value: http://localhost:3000/
+      - name: Sec-Fetch-Dest
+        value: empty
+      - name: Sec-Fetch-Mode
+        value: cors
+      - name: Sec-Fetch-Site
+        value: same-site
+      - name: User-Agent
+        value: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like
+          Gecko) Chrome/136.0.0.0 Safari/537.36
+      - name: sec-ch-ua
+        value: '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"'
+      - name: sec-ch-ua-mobile
+        value: ?0
+      - name: sec-ch-ua-platform
+        value: '"Windows"'
+    authentication: {}
+    metaSortKey: -1748557763208
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_ef3fafd2313d47dba524be3a098a693c
+    parentId: fld_f200e0ecd133409ea179df7bb0946d36
+    modified: 1748557763616
+    created: 1748557763616
+    url: http://localhost:8080/v1/orders/status
+    name: 01 - Pedidos Enviados Para Cozinha
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - name: status
+        value: SENT
+        disabled: false
+    headers:
+      - name: Accept
+        value: application/json, text/plain, */*
+      - name: Accept-Language
+        value: pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+      - name: Connection
+        value: keep-alive
+      - name: Origin
+        value: http://localhost:3000
+      - name: Referer
+        value: http://localhost:3000/
+      - name: Sec-Fetch-Dest
+        value: empty
+      - name: Sec-Fetch-Mode
+        value: cors
+      - name: Sec-Fetch-Site
+        value: same-site
+      - name: User-Agent
+        value: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like
+          Gecko) Chrome/136.0.0.0 Safari/537.36
+      - name: sec-ch-ua
+        value: '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"'
+      - name: sec-ch-ua-mobile
+        value: ?0
+      - name: sec-ch-ua-platform
+        value: '"Windows"'
+    authentication: {}
+    metaSortKey: -1748557763616
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_f200e0ecd133409ea179df7bb0946d36
+    parentId: fld_f1c803e401e9457ebe5dcfa43163c652
+    modified: 1748557792729
+    created: 1748557763616
+    name: 03 - FLUXO DE PEDIDO E ENTREGA
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1748557763500
+    _type: request_group
+  - _id: req_b034f5265e1e448b8ec0a9ba16a5151d
+    parentId: fld_f200e0ecd133409ea179df7bb0946d36
+    modified: 1748560401501
+    created: 1748557763617
+    url: http://localhost:8080/v1/orders/status
+    name: 02- LISTA DE PEDIDOS MONITOR
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - name: status
+        value: RECEIVED
+        disabled: false
+      - name: status
+        value: IN_PREPARATION
+        disabled: false
+      - name: status
+        value: READY
+        disabled: false
+    headers:
+      - name: Accept
+        value: application/json, text/plain, */*
+      - name: Accept-Language
+        value: pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+      - name: Connection
+        value: keep-alive
+      - name: Origin
+        value: http://localhost:3000
+      - name: Referer
+        value: http://localhost:3000/
+      - name: Sec-Fetch-Dest
+        value: empty
+      - name: Sec-Fetch-Mode
+        value: cors
+      - name: Sec-Fetch-Site
+        value: same-site
+      - name: User-Agent
+        value: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like
+          Gecko) Chrome/136.0.0.0 Safari/537.36
+      - name: sec-ch-ua
+        value: '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"'
+      - name: sec-ch-ua-mobile
+        value: ?0
+      - name: sec-ch-ua-platform
+        value: '"Windows"'
+    authentication: {}
+    metaSortKey: -1748557763566
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_dd3a7c97cda446e98a9859ab6c2226a5
+    parentId: fld_f200e0ecd133409ea179df7bb0946d36
+    modified: 1748560403262
+    created: 1748557763618
+    url: http://localhost:8080/v1/orders/6838e9ab98fe7062cf1fd842/advance-status
+    name: 03 - ATUALIZAR STATUS DE PEDIDO
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: ""
+    parameters: []
+    headers:
+      - name: Accept
+        value: application/json, text/plain, */*
+      - name: Accept-Language
+        value: pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+      - name: Connection
+        value: keep-alive
+      - name: Content-Type
+        value: application/json
+      - name: Origin
+        value: http://localhost:3000
+      - name: Referer
+        value: http://localhost:3000/
+      - name: Sec-Fetch-Dest
+        value: empty
+      - name: Sec-Fetch-Mode
+        value: cors
+      - name: Sec-Fetch-Site
+        value: same-site
+      - name: User-Agent
+        value: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like
+          Gecko) Chrome/136.0.0.0 Safari/537.36
+      - name: sec-ch-ua
+        value: '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"'
+      - name: sec-ch-ua-mobile
+        value: ?0
+      - name: sec-ch-ua-platform
+        value: '"Windows"'
+    authentication:
+      type: basic
+      useISO88591: false
+      disabled: false
+      username: admin
+      password: admin
+    metaSortKey: -1748557763516
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_0188a05446ea4528bdc6810238df5d73
+    parentId: fld_f200e0ecd133409ea179df7bb0946d36
+    modified: 1748560404853
+    created: 1748557763618
+    url: http://localhost:8080/v1/orders/status
+    name: 04 - Lista de Pedidos Finalizados (Entregues ao Cliente)
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - name: status
+        value: FINISHED
+        disabled: false
+    headers: []
+    authentication: {}
+    metaSortKey: -1748557763466
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_c5de137d09be41c792fbc6196a4c4cbc
+    parentId: fld_451dc5b783544914997b16c49d707027
+    modified: 1748560515440
+    created: 1746646274276
+    url: http://localhost:8080/v1/categories
+    name: Get Categories
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication:
+      username: admin
+      password: admin
+      type: basic
+      disabled: true
+    metaSortKey: -1745247511703.9375
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_451dc5b783544914997b16c49d707027
+    parentId: wrk_63a8719845814b358fcb37c0b557a496
+    modified: 1747449982676
+    created: 1746053680467
+    name: Category
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1719252047312.1484
+    _type: request_group
+  - _id: req_a2ad30f44ffe4b3f93bf3d6c72843c11
+    parentId: fld_451dc5b783544914997b16c49d707027
+    modified: 1748560536108
+    created: 1746053680473
+    url: localhost:8080/v1/categories/:categoryId
+    name: Get Category By Id
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_f19f202dd5bd46779fd9c56100a151f1
+        name: categoryId
+        value: 9331f962-0243-4f05-a865-54951e21cb49
+        description: ""
+    headers: []
+    authentication: {}
+    metaSortKey: -1745247511703.1562
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_7ac8cf32be1943ec980e039249acb8bf
+    parentId: fld_451dc5b783544914997b16c49d707027
+    modified: 1748560611608
+    created: 1746053680480
+    url: localhost:8080/v1/categories/by-name
+    name: Get Category By Name
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_f19f202dd5bd46779fd9c56100a151f1
+        name: categoryName
+        value: SNACK
+        description: ""
+    headers: []
+    authentication: {}
+    metaSortKey: -1745247511702.961
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_d4594bff99e747c2b32956b8c187f488
+    parentId: fld_451dc5b783544914997b16c49d707027
+    modified: 1748560581731
+    created: 1746053680469
+    url: localhost:8080/v1/categories
+    name: Create Category
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"name": "pow",
+        	"description": "acompanhamentos",
+        	"active": true
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: basic
+      useISO88591: false
+      disabled: false
+      username: admin
+      password: admin
+    metaSortKey: -1745247511702.7656
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_4663e353ee664f7cbc97b2bb3bb04129
+    parentId: fld_451dc5b783544914997b16c49d707027
+    modified: 1748560543917
+    created: 1746053680476
+    url: localhost:8080/v1/categories/:categoryId
+    name: Update Category
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"name": "pow edited",
+        	"description": "acompanhamentos",
+        	"active": true
+        }
+    parameters:
+      - id: pair_6e8a90479a254a6caff78834dfde5bfb
+        name: categoryId
+        value: 9331f962-0243-4f05-a865-54951e21cb49
+        description: ""
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: basic
+      useISO88591: false
+      disabled: false
+      username: admin
+      password: admin
+    metaSortKey: -1745247511702.375
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_ae44ff1ec5b24daba2c6ccbfe8dadb8d
+    parentId: fld_451dc5b783544914997b16c49d707027
+    modified: 1747450072069
+    created: 1746053680478
+    url: localhost:8080/v1/categories/:categoryId
+    name: Delete Category By Id
+    description: ""
+    method: DELETE
+    body: {}
+    parameters:
+      - id: pair_f19f202dd5bd46779fd9c56100a151f1
+        name: categoryId
+        value: UUID
+        description: ""
+    headers: []
+    authentication:
+      type: basic
+      useISO88591: false
+      disabled: false
+      username: admin
+      password: admin
+    metaSortKey: -1745247511700.8125
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_a487b94d0ac34285bbf561423369ac73
+    parentId: fld_afa7644470d7464f92fa353f9c2917ab
+    modified: 1747451183204
+    created: 1746053680388
+    url: localhost:8080/v1/clients/:cpf
+    name: Get Clientes By CPF
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_f19f202dd5bd46779fd9c56100a151f1
+        name: cpf
+        value: semtraçosepontos
+        description: ""
+        disabled: false
+    headers: []
+    authentication: {}
+    metaSortKey: -1745247511693
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_afa7644470d7464f92fa353f9c2917ab
+    parentId: wrk_63a8719845814b358fcb37c0b557a496
+    modified: 1747449986742
+    created: 1746053680380
+    name: Clientes
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1716842554789.1992
+    _type: request_group
+  - _id: req_14e63a286130436f9d3bf9dad303357a
+    parentId: fld_afa7644470d7464f92fa353f9c2917ab
+    modified: 1747451186641
+    created: 1746053680391
+    url: localhost:8080/v1/clients/:cpf
+    name: Update Cliente
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"cpf": "112233445566",
+        	"name": "Paulo Lima Updated",
+        	"email": "paulo.lima@email.com",
+        	"phone": "21-22104065"
+        }
+    parameters:
+      - id: pair_449872d5a1784d70bd4d3c9a5ac06f03
+        name: cpf
+        value: semtraçosepontos
+        description: ""
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: basic
+      useISO88591: false
+      disabled: false
+      username: ""
+      password: ""
+    metaSortKey: -1745247511674.25
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_23832f5b300d40ff91a127cbd900f9bd
+    parentId: fld_afa7644470d7464f92fa353f9c2917ab
+    modified: 1747451190756
+    created: 1746053680393
+    url: localhost:8080/v1/clients/:cpf
+    name: Delete User By CPF
+    description: ""
+    method: DELETE
+    body: {}
+    parameters:
+      - id: pair_f19f202dd5bd46779fd9c56100a151f1
+        name: cpf
+        value: semtraçosepontos
+        description: ""
+    headers: []
+    authentication:
+      type: basic
+      useISO88591: false
+      disabled: false
+      username: ""
+      password: ""
+    metaSortKey: -1745247511664.875
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_8050160f45db4c459c75e0546178b65b
+    parentId: fld_afa7644470d7464f92fa353f9c2917ab
+    modified: 1747451193747
+    created: 1746053680385
+    url: localhost:8080/v1/clients
+    name: Get Clientes
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication:
+      type: basic
+      useISO88591: false
+      disabled: true
+      username: admin
+      password: admin
+    metaSortKey: -1745247511655.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_6bd70743063a4030bdf6ef2ca8c69730
+    parentId: fld_afa7644470d7464f92fa353f9c2917ab
+    modified: 1747451179520
+    created: 1746053680382
+    url: localhost:8080/v1/clients
+    name: Create Cliente
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"cpf": "112233445567",
+        	"name": "Paulo Lima",
+        	"email": "paulo.lima@email.com",
+        	"phone": "21-22104065"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: basic
+      useISO88591: false
+      disabled: false
+      username: admin
+      password: admin
+    metaSortKey: -1745247511618
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_a0ffee2fb63b476bbc0ea50a19c5b430
+    parentId: fld_cbeec2e732e44172b72755651b9e3bca
+    modified: 1747450308155
+    created: 1746053680404
+    url: localhost:8080/v1/products/:productId
+    name: Get Product By Id
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_f19f202dd5bd46779fd9c56100a151f1
+        name: productId
+        value: UUID
+        description: ""
+    headers: []
+    authentication:
+      type: basic
+      useISO88591: false
+      disabled: false
+      username: admin
+      password: admin
+    metaSortKey: -1745247511668
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_cbeec2e732e44172b72755651b9e3bca
+    parentId: wrk_63a8719845814b358fcb37c0b557a496
+    modified: 1746053680398
+    created: 1746053680398
+    name: Product
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1714433062266.25
+    _type: request_group
+  - _id: req_95ce1ba30856442ea7a17ae8afe6fb40
+    parentId: fld_cbeec2e732e44172b72755651b9e3bca
+    modified: 1747450321881
+    created: 1746053680407
+    url: localhost:8080/v1/products/:productId
+    name: Update Product
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: >-
+        {
+        	"name": "Hamburguer bolado",
+        	"description": "x-tudo",
+        	"price": 15.0,
+        	"active": true,
+        	"images": [
+        		{
+        			"url": "https://api-middleware-mcd.mcdonaldscupones.com/media/image/product$kzX1Xu4q/200/200/original?country=br"
+        		}
+        	],
+        	"category": "SNACK"
+        }
+    parameters:
+      - id: pair_4eb82842308c473db91a3cba70005488
+        name: productId
+        value: UUID
+        description: ""
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: basic
+      useISO88591: false
+      disabled: false
+      username: admin
+      password: admin
+    metaSortKey: -1745247511664.875
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_efed9dd213b0484ab5bd493e22758e17
+    parentId: fld_cbeec2e732e44172b72755651b9e3bca
+    modified: 1747450339427
+    created: 1746053680410
+    url: localhost:8080/v1/products/:productId
+    name: Delete Product By Id
+    description: ""
+    method: DELETE
+    body: {}
+    parameters:
+      - id: pair_f19f202dd5bd46779fd9c56100a151f1
+        name: productId
+        value: UUID
+        description: ""
+    headers: []
+    authentication:
+      type: basic
+      useISO88591: false
+      disabled: false
+      username: admin
+      password: admin
+    metaSortKey: -1745247511663.3125
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_58d79e3e0e8e4981896357346c2d4a64
+    parentId: fld_cbeec2e732e44172b72755651b9e3bca
+    modified: 1747450288338
+    created: 1746053680402
+    url: localhost:8080/v1/products
+    name: Get Products
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication:
+      type: basic
+      useISO88591: false
+      disabled: true
+      username: admin
+      password: admin
+    metaSortKey: -1745247511661.75
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_33def1cca96f43d1a166f4c7cc9cf59d
+    parentId: fld_cbeec2e732e44172b72755651b9e3bca
+    modified: 1747450349571
+    created: 1746053680399
+    url: localhost:8080/v1/products
+    name: Create Product
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"name": "Hambuerguer",
+        	"description": "x-tudo",
+        	"price": 15.0,
+        	"active": true,
+        	"images": [
+        		{
+        			"url": "http://image.com/image.jpg"
+        		}
+        	],
+        	"category": "SNACK"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: basic
+      useISO88591: false
+      disabled: false
+      username: admin
+      password: admin
+    metaSortKey: -1745247511658.625
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_4d5334802b37422e99091780bd0b9455
+    parentId: fld_cbeec2e732e44172b72755651b9e3bca
+    modified: 1747450385421
+    created: 1746053680412
+    url: localhost:8080/v1/products/categories/:categoryName
+    name: Get Product By Category
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_f19f202dd5bd46779fd9c56100a151f1
+        name: categoryName
+        value: NAMESTRING
+        description: ""
+    headers: []
+    authentication: {}
+    metaSortKey: -1745247511655.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_9bd9569ddfde437bab868281a1b71a1d
+    parentId: fld_1f8e71fba5de4c3699eeb8167d0e3bee
+    modified: 1748560828637
+    created: 1746053680422
+    url: localhost:8080/v1/orders
+    name: Get Orders
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1745247511666.4375
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_1f8e71fba5de4c3699eeb8167d0e3bee
+    parentId: wrk_63a8719845814b358fcb37c0b557a496
+    modified: 1746053680418
+    created: 1746053680418
+    name: Order
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1699012310119.375
+    _type: request_group
+  - _id: req_53071a430a23460bb9ba21e260198449
+    parentId: fld_1f8e71fba5de4c3699eeb8167d0e3bee
+    modified: 1748560829685
+    created: 1746053680426
+    url: localhost:8080/v1/orders/:orderId
+    name: Get Order By Id
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_f19f202dd5bd46779fd9c56100a151f1
+        name: orderId
+        value: 6828003dccf31a13370a3ce6
+        description: ""
+    headers: []
+    authentication: {}
+    metaSortKey: -1745247511664.0938
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_eeb541de85f04f3c84017a3e37a269c5
+    parentId: fld_1f8e71fba5de4c3699eeb8167d0e3bee
+    modified: 1748560960761
+    created: 1746053680433
+    url: localhost:8080/v1/orders/status
+    name: Get Orders By Status
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_f19f202dd5bd46779fd9c56100a151f1
+        name: status
+        value: "Available values : CREATED, SENT, RECEIVED, IN_PREPARATION, READY,
+          FINISHED"
+        description: ""
+        disabled: true
+      - id: pair_9fe3cfaa040b4a47adce7e00c6600c88
+        name: status
+        value: RECEIVED
+        description: ""
+    headers: []
+    authentication: {}
+    metaSortKey: -1745247511662.9219
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_cb08366387784084a09d94e673dc36f6
+    parentId: fld_1f8e71fba5de4c3699eeb8167d0e3bee
+    modified: 1748560838725
+    created: 1746053680420
+    url: localhost:8080/v1/orders
+    name: Create Order
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"cpfClient": "112233445567",
+        	"title": "Order Title",
+        	"description": "Order Description",
+        	"combo": {
+        		"snack": [
+        			{
+        				"productId": "cab7033a-0245-401e-a885-d5bb01e77e21",
+        				"quantity": 2
+        			}
+        		],
+        		"garnish": [],
+        		"drink": [],
+        		"dessert": []
+        	}
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication: {}
+    metaSortKey: -1745247511662.336
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_a8aae2e0fc0f46ad9667984c929ac646
+    parentId: fld_1f8e71fba5de4c3699eeb8167d0e3bee
+    modified: 1748560822779
+    created: 1746053680428
+    url: localhost:8080/v1/orders/:orderId
+    name: Update Order
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"cpfClient": "112233445567",
+        	"title": "Order Title",
+        	"description": "Order Description",
+        	"combo": {
+        		"snack": [
+        			{
+        				"productId": "cab7033a-0245-401e-a885-d5bb01e77e21",
+        				"quantity": 2
+        			}
+        		],
+        		"garnish": [],
+        		"drink": [],
+        		"dessert": []
+        	}
+        }
+    parameters:
+      - id: pair_96a92304e9274984a068c97e7eba8eea
+        name: orderId
+        value: UUID
+        description: ""
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication: {}
+    metaSortKey: -1745247511661.75
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_ec04f588fc54412dbab499718081f73e
+    parentId: fld_1f8e71fba5de4c3699eeb8167d0e3bee
+    modified: 1748560810759
+    created: 1748560794105
+    url: http://localhost:8080/v1/orders/6838e9ab98fe7062cf1fd842/advance-status
+    name: Update Order Status
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: ""
+    parameters: []
+    headers:
+      - name: Accept
+        value: application/json, text/plain, */*
+      - name: Accept-Language
+        value: pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+      - name: Connection
+        value: keep-alive
+      - name: Content-Type
+        value: application/json
+      - name: Origin
+        value: http://localhost:3000
+      - name: Referer
+        value: http://localhost:3000/
+      - name: Sec-Fetch-Dest
+        value: empty
+      - name: Sec-Fetch-Mode
+        value: cors
+      - name: Sec-Fetch-Site
+        value: same-site
+      - name: User-Agent
+        value: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like
+          Gecko) Chrome/136.0.0.0 Safari/537.36
+      - name: sec-ch-ua
+        value: '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"'
+      - name: sec-ch-ua-mobile
+        value: ?0
+      - name: sec-ch-ua-platform
+        value: '"Windows"'
+    authentication:
+      type: basic
+      useISO88591: false
+      disabled: false
+      username: admin
+      password: admin
+    metaSortKey: -1745247511656.2812
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_aae1a5240a5a43ce91f9cbee4e40f0d3
+    parentId: fld_1f8e71fba5de4c3699eeb8167d0e3bee
+    modified: 1748560836395
+    created: 1746053680431
+    url: localhost:8080/v1/orders/:orderId
+    name: Delete Order By Id
+    description: ""
+    method: DELETE
+    body: {}
+    parameters:
+      - id: pair_f19f202dd5bd46779fd9c56100a151f1
+        name: orderId
+        value: UUID
+        description: ""
+    headers: []
+    authentication: {}
+    metaSortKey: -1745247511599.25
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_bd9ed51d7ee944c58decda2b4c2859e0
+    parentId: fld_58da9ca8f2334133a2f497f9e98484d5
+    modified: 1747452140466
+    created: 1747450647164
+    url: localhost:8080/v1/payments/pix/6827fd3fccf31a13370a3ce5/:orderId
+    name: Create payment pix
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+            "amount": 30.00,
+            "description": "Pagamento do pedido teste",
+            "client_id": "6827fd3fccf31a13370a3ce5",
+            "order_id": "6828003dccf31a13370a3ce6"
+        }
+    parameters:
+      - id: pair_8014d4463ef54a938b0b0b96c04f6337
+        name: clientId
+        value: ""
+        description: ""
+        disabled: true
+      - id: pair_f23ed57c98fc4665ad98f433724ff8d3
+        name: orderId
+        value: 6828003dccf31a13370a3ce6
+        description: ""
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication: {}
+    metaSortKey: -1745247511660.1875
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_58da9ca8f2334133a2f497f9e98484d5
+    parentId: wrk_63a8719845814b358fcb37c0b557a496
+    modified: 1747450647162
+    created: 1747450647162
+    name: Payment
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1695157122082.6562
+    _type: request_group
+  - _id: req_c16af8ba834c40109e0696a1ad741751
+    parentId: fld_58da9ca8f2334133a2f497f9e98484d5
+    modified: 1747452236468
+    created: 1747450691112
+    url: localhost:8080/v1/payments/notification
+    name: Update payment (fake checkout)
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "id": "68280063ccf31a13370a3ce7",
+          "live_mode": true,
+          "type": "payment",
+          "date_created": "2023-10-01T12:00:00Z",
+          "user_id": "112233445567",
+          "api_version": "v1",
+          "action": "approved",
+          "data": {
+            "order_id": "6828003dccf31a13370a3ce6",
+            "amount": 30.00,
+            "currency": "USD"
+          }
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication: {}
+    metaSortKey: -1745247511659.7969
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_7c4caa2b692a443cbf7620eb88a060cf
+    parentId: fld_58da9ca8f2334133a2f497f9e98484d5
+    modified: 1747450870031
+    created: 1747450647166
+    url: localhost:8080/v1/payments
+    name: Get payments
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1745247511659.6016
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_7d895f49113a40d19833176cc4e95290
+    parentId: fld_58da9ca8f2334133a2f497f9e98484d5
+    modified: 1747450928457
+    created: 1747450647168
+    url: localhost:8080/v1/payments/pix/:paymentorderId
+    name: Get payment By Id
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_f19f202dd5bd46779fd9c56100a151f1
+        name: paymentorderId
+        value: UUID
+        description: ""
+    headers: []
+    authentication: {}
+    metaSortKey: -1745247511659.504
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_11355855a33546dc835a30094b46d6cf
+    parentId: fld_58da9ca8f2334133a2f497f9e98484d5
+    modified: 1747450977274
+    created: 1747450647172
+    url: localhost:8080/v1/payments/:paymentorderId
+    name: Delete payment By Id
+    description: ""
+    method: DELETE
+    body: {}
+    parameters:
+      - id: pair_f19f202dd5bd46779fd9c56100a151f1
+        name: paymentorderId
+        value: String
+        description: ""
+    headers: []
+    authentication: {}
+    metaSortKey: -1745247511659.455
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_9292722b0a194f829f7bddba173347c1
+    parentId: fld_58da9ca8f2334133a2f497f9e98484d5
+    modified: 1747451024129
+    created: 1747450647174
+    url: localhost:8080/v1/payments/options
+    name: Get payments options
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1745247511659.4307
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: env_58876a2c2bdc440aac396a59d926b203
+    parentId: wrk_63a8719845814b358fcb37c0b557a496
+    modified: 1746053680370
+    created: 1746053680370
+    name: Base Environment
+    data: {}
+    dataPropertyOrder: null
+    color: null
+    isPrivate: false
+    metaSortKey: 1744842945711
+    _type: environment
+  - _id: jar_d2cc56d519924c46987357449f2d8960
+    parentId: wrk_63a8719845814b358fcb37c0b557a496
+    modified: 1746648434127
+    created: 1746053680373
+    name: Default Jar
+    cookies:
+      - key: JSESSIONID
+        value: A8E1DA1765EACAC076A0E81FCE97595D
+        domain: localhost
+        path: /
+        httpOnly: true
+        hostOnly: true
+        creation: 2025-04-22T21:07:15.732Z
+        lastAccessed: 2025-05-07T20:07:14.127Z
+        id: "01523874075631726"
+    _type: cookie_jar
+  - _id: spc_75cc00d200624368b45542cfc039b59b
+    parentId: wrk_63a8719845814b358fcb37c0b557a496
+    modified: 1746053680487
+    created: 1746053680377
+    fileName: FIAP-G57
+    contents: ""
+    contentType: yaml
+    _type: api_spec

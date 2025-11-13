@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-config
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: api-secret
+data: {}
+type: Opaque
