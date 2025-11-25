@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: api-food-orders
+  namespace: orders
 spec:
   replicas: 2
   selector:
@@ -14,7 +15,7 @@ spec:
     spec:
       containers:
         - name: api-food-orders
-          image: postechf57/pos-tech-g57-api:latest
+          image: postechf57/pos-tech-g57-app-orders:latest
           ports:
             - containerPort: 8080
           envFrom:

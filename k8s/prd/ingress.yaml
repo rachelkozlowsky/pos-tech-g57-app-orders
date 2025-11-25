@@ -2,6 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: api-food-orders-ingress
+  namespace: orders
   annotations:
 
     kubernetes.io/ingress.class: alb

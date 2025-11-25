@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   food-app:
-    build: .
+    image: postechf57/pos-tech-g57-app-orders
     container_name: "docker-app"
     ports:
       - 8080:8080
@@ -11,7 +11,7 @@ services:
       - api-food-network
     environment:
       - SPRING_DATA_MONGODB_URI=mongodb://admin:123456@mongodb:27017/fooddb?authSource=admin
-    env_file: des.env
+    # env_file: des.env
 
   mongodb:
     image: mongo:latest

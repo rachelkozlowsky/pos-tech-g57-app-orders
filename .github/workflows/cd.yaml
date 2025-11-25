@@ -1,0 +1,12 @@
+name: CD
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  call-reusable-deploy-workflow:
+    uses: rachelkozlowsky/nested-reusable-java-maven-eks-fork/.github/workflows/deploy.yml@main
+    with:
+      cluster_name: "eks-postech-g57"
+      namespace: "orders"
+    secrets: inherit
