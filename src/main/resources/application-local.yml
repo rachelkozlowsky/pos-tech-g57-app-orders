@@ -1,4 +1,8 @@
 spring:
+  cloud:
+    aws:
+      region:
+        static: us-east-1
   application:
     name: api-food
   datasource:
