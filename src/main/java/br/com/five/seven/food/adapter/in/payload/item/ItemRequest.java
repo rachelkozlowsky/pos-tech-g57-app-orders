@@ -1,6 +1,5 @@
-package br.com.five.seven.food.adapter.in.payload.combo.item;
+package br.com.five.seven.food.adapter.in.payload.item;
 
-import br.com.five.seven.food.adapter.in.payload.products.ProductResponse;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -10,10 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ItemResponse {
+public class ItemRequest {
 
     @NotNull
-    private ProductResponse product;
+    private Long productId;
     @Min(1)
     private Integer quantity;
 }

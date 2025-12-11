@@ -1,6 +1,6 @@
 package br.com.five.seven.food.adapter.in.payload.order;
 
-import br.com.five.seven.food.adapter.in.payload.combo.item.ItemRequest;
+import br.com.five.seven.food.adapter.in.payload.item.ItemRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateOrderComboRequest {
+public class UpdateOrderItemsRequest {
     @NotEmpty(message = "Order must have at least one item")
     @Valid
     private List<ItemRequest> items = new ArrayList<>();

@@ -1,6 +1,6 @@
 package br.com.five.seven.food.adapter.in.payload.order;
 
-import br.com.five.seven.food.adapter.in.payload.combo.item.ItemResponse;
+import br.com.five.seven.food.adapter.in.payload.item.ItemResponse;
 import br.com.five.seven.food.application.domain.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;

@@ -1,7 +1,7 @@
 package br.com.five.seven.food.adapter.in.mappers;
 
-import br.com.five.seven.food.adapter.in.payload.combo.item.ItemRequest;
-import br.com.five.seven.food.adapter.in.payload.combo.item.ItemResponse;
+import br.com.five.seven.food.adapter.in.payload.item.ItemRequest;
+import br.com.five.seven.food.adapter.in.payload.item.ItemResponse;
 import br.com.five.seven.food.adapter.out.relational.entity.ItemEntity;
 import br.com.five.seven.food.application.domain.Item;
 

@@ -5,9 +5,8 @@ import br.com.five.seven.food.adapter.in.mappers.OrderMapper;
 import br.com.five.seven.food.adapter.in.payload.order.CreateOrderRequest;
 import br.com.five.seven.food.adapter.in.payload.order.OrderMonitorResponse;
 import br.com.five.seven.food.adapter.in.payload.order.OrderResponse;
-import br.com.five.seven.food.adapter.in.payload.order.UpdateOrderComboRequest;
+import br.com.five.seven.food.adapter.in.payload.order.UpdateOrderItemsRequest;
 import br.com.five.seven.food.adapter.in.payload.order.UpdateOrderRequest;
-import br.com.five.seven.food.adapter.out.relational.entity.ItemEntity;
 import br.com.five.seven.food.adapter.out.relational.entity.OrderEntity;
 import br.com.five.seven.food.application.domain.Order;
 import br.com.five.seven.food.application.domain.enums.OrderStatus;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -26,34 +24,48 @@ public class OrderMapperImpl implements OrderMapper {
 
     @Override
     public Order createRequestToDomain(CreateOrderRequest createOrderRequest) {
-        return new Order(
+        Order order = new Order(
                 null,
                 createOrderRequest.getTitle(),
                 createOrderRequest.getDescription(),
                 OrderStatus.CREATED,
                 createOrderRequest.getCpfClient(),
-                itemMapper.requestListToDomainList(createOrderRequest.getItems()),
+                null,  // Items set below to establish bidirectional relationship
                 BigDecimal.ZERO,
                 null,
                 LocalDateTime.now(),
                 LocalDateTime.now()
         );
+
+        // Map items and establish bidirectional relationship
+        var items = itemMapper.requestListToDomainList(createOrderRequest.getItems());
+        items.forEach(item -> item.setOrder(order));
+        order.setItems(items);
+
+        return order;
     }
 
     @Override
     public Order updateRequestToDomain(Long id, UpdateOrderRequest updateOrderRequest) {
-        return new Order(
+        Order order = new Order(
                 id,
                 updateOrderRequest.getTitle(),
                 updateOrderRequest.getDescription(),
                 updateOrderRequest.getOrderStatus(),
                 updateOrderRequest.getCpfClient(),
-                itemMapper.requestListToDomainList(updateOrderRequest.getItems()),
+                null,  // Items set below to establish bidirectional relationship
                 BigDecimal.ZERO,
                 null,
                 null,
                 null
         );
+
+        // Map items and establish bidirectional relationship
+        var items = itemMapper.requestListToDomainList(updateOrderRequest.getItems());
+        items.forEach(item -> item.setOrder(order));
+        order.setItems(items);
+
+        return order;
     }
 
     @Override
@@ -80,7 +92,7 @@ public class OrderMapperImpl implements OrderMapper {
                 order.getDescription(),
                 order.getOrderStatus().name(),
                 order.getCpfClient(),
-                null,
+                null,  // Items set below to establish bidirectional relationship
                 order.getTotalAmount(),
                 order.getReceivedAt(),
                 order.getRemainingTime(),
@@ -89,32 +101,34 @@ public class OrderMapperImpl implements OrderMapper {
         );
 
         // Map items and establish bidirectional relationship
-        var items = order.getItems().stream()
-                .map(item -> {
-                    ItemEntity itemEntity = itemMapper.domainToEntity(item);
-                    itemEntity.setOrder(orderEntity);
-                    return itemEntity;
-                })
-                .collect(Collectors.toList());
-
+        var items = itemMapper.domainListToEntityList(order.getItems());
+        items.forEach(item -> item.setOrder(orderEntity));
         orderEntity.setItems(items);
+
         return orderEntity;
     }
 
     @Override
     public Order entityToDomain(OrderEntity orderEntity) {
-        return new Order(
+        Order order = new Order(
                 orderEntity.getId(),
                 orderEntity.getTitle(),
                 orderEntity.getDescription(),
                 OrderStatus.valueOf(orderEntity.getOrderStatus()),
                 orderEntity.getCpfClient(),
-                itemMapper.entityListToDomainList(orderEntity.getItems()),
+                null,  // Items set below to establish bidirectional relationship
                 orderEntity.getTotalAmount(),
                 orderEntity.getReceivedAt(),
                 orderEntity.getCreatedAt(),
                 orderEntity.getUpdatedAt()
         );
+
+        // Map items and establish bidirectional relationship
+        var items = itemMapper.entityListToDomainList(orderEntity.getItems());
+        items.forEach(item -> item.setOrder(order));
+        order.setItems(items);
+
+        return order;
     }
 
     @Override
@@ -132,18 +146,25 @@ public class OrderMapperImpl implements OrderMapper {
     }
 
     @Override
-    public Order updateOrderItemsRequestToDomain(Long id, UpdateOrderComboRequest updateOrderComboRequest) {
-        return new Order(
+    public Order updateOrderItemsRequestToDomain(Long id, UpdateOrderItemsRequest updateOrderItemsRequest) {
+        Order order = new Order(
                 id,
                 null,
                 null,
                 null,
                 null,
-                itemMapper.requestListToDomainList(updateOrderComboRequest.getItems()),
+                null,  // Items set below to establish bidirectional relationship
                 null,
                 null,
                 null,
                 null
         );
+
+        // Map items and establish bidirectional relationship
+        var items = itemMapper.requestListToDomainList(updateOrderItemsRequest.getItems());
+        items.forEach(item -> item.setOrder(order));
+        order.setItems(items);
+
+        return order;
     }
 }
