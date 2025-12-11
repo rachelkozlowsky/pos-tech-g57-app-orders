@@ -1,14 +1,14 @@
 package br.com.five.seven.food.adapter.in.mappers.impl;
 
-import br.com.five.seven.food.adapter.in.mappers.ComboMapper;
+import br.com.five.seven.food.adapter.in.mappers.ItemMapper;
 import br.com.five.seven.food.adapter.in.mappers.OrderMapper;
-import br.com.five.seven.food.adapter.in.payload.combo.ComboRequest;
 import br.com.five.seven.food.adapter.in.payload.order.CreateOrderRequest;
 import br.com.five.seven.food.adapter.in.payload.order.OrderMonitorResponse;
 import br.com.five.seven.food.adapter.in.payload.order.OrderResponse;
+import br.com.five.seven.food.adapter.in.payload.order.UpdateOrderComboRequest;
 import br.com.five.seven.food.adapter.in.payload.order.UpdateOrderRequest;
+import br.com.five.seven.food.adapter.out.relational.entity.ItemEntity;
 import br.com.five.seven.food.adapter.out.relational.entity.OrderEntity;
-import br.com.five.seven.food.application.domain.Combo;
 import br.com.five.seven.food.application.domain.Order;
 import br.com.five.seven.food.application.domain.enums.OrderStatus;
 import lombok.RequiredArgsConstructor;
@@ -16,24 +16,23 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
 public class OrderMapperImpl implements OrderMapper {
 
-    private final ComboMapper comboMapper;
+    private final ItemMapper itemMapper;
 
     @Override
     public Order createRequestToDomain(CreateOrderRequest createOrderRequest) {
-        Combo combo = comboMapper.requestToDomain(createOrderRequest.getCombo());
-
         return new Order(
                 null,
                 createOrderRequest.getTitle(),
                 createOrderRequest.getDescription(),
                 OrderStatus.CREATED,
                 createOrderRequest.getCpfClient(),
-                combo,
+                itemMapper.requestListToDomainList(createOrderRequest.getItems()),
                 BigDecimal.ZERO,
                 null,
                 LocalDateTime.now(),
@@ -43,15 +42,13 @@ public class OrderMapperImpl implements OrderMapper {
 
     @Override
     public Order updateRequestToDomain(Long id, UpdateOrderRequest updateOrderRequest) {
-        Combo combo = comboMapper.requestToDomain(updateOrderRequest.getCombo());
-
         return new Order(
                 id,
                 updateOrderRequest.getTitle(),
                 updateOrderRequest.getDescription(),
                 updateOrderRequest.getOrderStatus(),
                 updateOrderRequest.getCpfClient(),
-                combo,
+                itemMapper.requestListToDomainList(updateOrderRequest.getItems()),
                 BigDecimal.ZERO,
                 null,
                 null,
@@ -67,9 +64,9 @@ public class OrderMapperImpl implements OrderMapper {
                 order.getDescription(),
                 order.getOrderStatus(),
                 order.getCpfClient(),
-                comboMapper.domainToResponse(order.getCombo()),
+                itemMapper.domainListToResponseList(order.getItems()),
                 order.getTotalAmount(),
-                order.getUpdatedAt(),
+                order.getReceivedAt(),
                 order.getUpdatedAt(),
                 order.getRemainingTime()
         );
@@ -77,32 +74,42 @@ public class OrderMapperImpl implements OrderMapper {
 
     @Override
     public OrderEntity domainToEntity(Order order) {
-        return new OrderEntity(
+        OrderEntity orderEntity = new OrderEntity(
                 order.getId(),
                 order.getTitle(),
                 order.getDescription(),
                 order.getOrderStatus().name(),
                 order.getCpfClient(),
-                comboMapper.domainToEntity(order.getCombo()),
+                null,
                 order.getTotalAmount(),
                 order.getReceivedAt(),
                 order.getRemainingTime(),
                 order.getCreatedAt(),
                 order.getUpdatedAt()
         );
+
+        // Map items and establish bidirectional relationship
+        var items = order.getItems().stream()
+                .map(item -> {
+                    ItemEntity itemEntity = itemMapper.domainToEntity(item);
+                    itemEntity.setOrder(orderEntity);
+                    return itemEntity;
+                })
+                .collect(Collectors.toList());
+
+        orderEntity.setItems(items);
+        return orderEntity;
     }
 
     @Override
     public Order entityToDomain(OrderEntity orderEntity) {
-        Combo combo = comboMapper.entityToDomain(orderEntity.getCombo());
-
         return new Order(
                 orderEntity.getId(),
                 orderEntity.getTitle(),
                 orderEntity.getDescription(),
                 OrderStatus.valueOf(orderEntity.getOrderStatus()),
                 orderEntity.getCpfClient(),
-                combo,
+                itemMapper.entityListToDomainList(orderEntity.getItems()),
                 orderEntity.getTotalAmount(),
                 orderEntity.getReceivedAt(),
                 orderEntity.getCreatedAt(),
@@ -125,16 +132,14 @@ public class OrderMapperImpl implements OrderMapper {
     }
 
     @Override
-    public Order updateOrderComboRequestToDomain(Long id, ComboRequest comboRequest) {
-        Combo combo = comboMapper.requestToDomain(comboRequest);
-
+    public Order updateOrderItemsRequestToDomain(Long id, UpdateOrderComboRequest updateOrderComboRequest) {
         return new Order(
                 id,
                 null,
                 null,
                 null,
                 null,
-                combo,
+                itemMapper.requestListToDomainList(updateOrderComboRequest.getItems()),
                 null,
                 null,
                 null,

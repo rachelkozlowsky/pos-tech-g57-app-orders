@@ -1,6 +1,5 @@
 package br.com.five.seven.food.application.service;
 
-import br.com.five.seven.food.application.domain.Combo;
 import br.com.five.seven.food.application.domain.Item;
 import br.com.five.seven.food.application.domain.Order;
 import br.com.five.seven.food.application.domain.Product;
@@ -117,13 +116,13 @@ public class OrderService implements OrderServiceIn {
     }
 
     @Override
-    public Order updateOrderCombo(Long id, Order order) throws ValidationException {
+    public Order updateOrderItems(Long id, Order order) throws ValidationException {
         Order orderToBeUpdated = findById(id);
         validateAndPopulateOrder(order, false);
-        validateAndPopulateOrder(orderToBeUpdated, true);
-        orderToBeUpdated.setCombo(order.getCombo());
-        order.setUpdatedAt(LocalDateTime.now());
-        return orderRepository.update(order);
+        orderToBeUpdated.setItems(order.getItems());
+        orderToBeUpdated.setTotalAmount(orderToBeUpdated.calculateTotalAmount());
+        orderToBeUpdated.setUpdatedAt(LocalDateTime.now());
+        return orderRepository.update(orderToBeUpdated);
     }
 
     private Order validateAndPopulateOrder(Order order, boolean isSearch) throws ValidationException {
@@ -131,16 +130,15 @@ public class OrderService implements OrderServiceIn {
             //TODO search client cpf validation
         }
 
-        Combo combo = order.getCombo();
-        List<Item> items = combo.getItems();
+        List<Item> items = order.getItems();
 
         if (items == null || items.isEmpty()) {
-            throw new ValidationException("Order combo cannot be empty.");
+            throw new ValidationException("Order must have at least one item.");
         }
 
         validateAndSetProducts(items, isSearch);
 
-        order.setTotalAmount(combo.getTotalPrice());
+        order.setTotalAmount(order.calculateTotalAmount());
         order.setRemainingTime(calculateTime(order.getReceivedAt(), order.getOrderStatus()));
 
         return order;

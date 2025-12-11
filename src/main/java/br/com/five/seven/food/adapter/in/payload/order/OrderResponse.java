@@ -1,6 +1,6 @@
 package br.com.five.seven.food.adapter.in.payload.order;
 
-import br.com.five.seven.food.adapter.in.payload.combo.ComboResponse;
+import br.com.five.seven.food.adapter.in.payload.combo.item.ItemResponse;
 import br.com.five.seven.food.application.domain.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -16,6 +16,8 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -41,9 +43,9 @@ public class OrderResponse {
     @Valid
     private String client;
 
-    @NotNull
+    @NotEmpty
     @Valid
-    private ComboResponse combo;
+    private List<ItemResponse> items = new ArrayList<>();
 
     @NotNull
     private BigDecimal totalAmount;

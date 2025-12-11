@@ -443,7 +443,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"cpfClient\": \"12345678900\",\n  \"title\": \"Pedido Lanche Completo\",\n  \"description\": \"Pedido com lanche, acompanhamento, bebida e sobremesa\",\n  \"combo\": {\n    \"id\": null,\n    \"items\": [\n      {\n        \"productId\": 1,\n        \"quantity\": 2\n      },\n      {\n        \"productId\": 2,\n        \"quantity\": 1\n      },\n      {\n        \"productId\": 3,\n        \"quantity\": 2\n      },\n      {\n        \"productId\": 4,\n        \"quantity\": 1\n      }\n    ]\n  }\n}"
+							"raw": "{\n  \"cpfClient\": \"12345678900\",\n  \"title\": \"Pedido Lanche Completo\",\n  \"description\": \"Pedido com lanche, acompanhamento, bebida e sobremesa\",\n  \"items\": [\n    {\n      \"productId\": 1,\n      \"quantity\": 2\n    },\n    {\n      \"productId\": 2,\n      \"quantity\": 1\n    },\n    {\n      \"productId\": 3,\n      \"quantity\": 2\n    },\n    {\n      \"productId\": 4,\n      \"quantity\": 1\n    }\n  ]\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/v1/orders",
@@ -664,7 +664,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"cpfClient\": \"12345678900\",\n  \"title\": \"Pedido Lanche Completo - Updated\",\n  \"description\": \"Pedido atualizado\",\n  \"orderStatus\": \"IN_PREPARATION\",\n  \"combo\": {\n    \"id\": null,\n    \"items\": [\n      {\n        \"productId\": 1,\n        \"quantity\": 3\n      },\n      {\n        \"productId\": 2,\n        \"quantity\": 2\n      },\n      {\n        \"productId\": 3,\n        \"quantity\": 3\n      },\n      {\n        \"productId\": 4,\n        \"quantity\": 2\n      }\n    ]\n  }\n}"
+							"raw": "{\n  \"cpfClient\": \"12345678900\",\n  \"title\": \"Pedido Lanche Completo - Updated\",\n  \"description\": \"Pedido atualizado\",\n  \"orderStatus\": \"IN_PREPARATION\",\n  \"items\": [\n    {\n      \"productId\": 1,\n      \"quantity\": 3\n    },\n    {\n      \"productId\": 2,\n      \"quantity\": 2\n    },\n    {\n      \"productId\": 3,\n      \"quantity\": 3\n    },\n    {\n      \"productId\": 4,\n      \"quantity\": 2\n    }\n  ]\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/v1/orders/:id",
@@ -689,7 +689,7 @@
 					"response": []
 				},
 				{
-					"name": "Update Order Combo",
+					"name": "Update Order Items",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -710,10 +710,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"id\": null,\n  \"items\": [\n    {\n      \"productId\": 1,\n      \"quantity\": 2\n    },\n    {\n      \"productId\": 2,\n      \"quantity\": 1\n    },\n    {\n      \"productId\": 3,\n      \"quantity\": 2\n    }\n  ]\n}"
+							"raw": "{\n  \"items\": [\n    {\n      \"productId\": 1,\n      \"quantity\": 2\n    },\n    {\n      \"productId\": 2,\n      \"quantity\": 1\n    },\n    {\n      \"productId\": 3,\n      \"quantity\": 2\n    }\n  ]\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/v1/orders/:id/combo",
+							"raw": "{{baseUrl}}/v1/orders/:id/items",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -721,7 +721,7 @@
 								"v1",
 								"orders",
 								":id",
-								"combo"
+								"items"
 							],
 							"variable": [
 								{
@@ -731,7 +731,7 @@
 								}
 							]
 						},
-						"description": "Update only the combo of an existing order. Requires ADMIN role."
+						"description": "Update only the items of an existing order. Requires ADMIN role."
 					},
 					"response": []
 				},

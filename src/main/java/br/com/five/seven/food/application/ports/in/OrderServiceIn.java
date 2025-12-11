@@ -17,5 +17,5 @@ public interface OrderServiceIn {
     Page<Order> findAllByOrderStatus(List<OrderStatus> orderStatus, Pageable pageable);
     Order updateStatusOrder(Long orderId, OrderStatus orderStatus) throws ValidationException;
     Order advanceOrderStatus(Long id) throws ValidationException;
-    Order updateOrderCombo(Long id, Order order) throws ValidationException;
+    Order updateOrderItems(Long id, Order order) throws ValidationException;
 }
