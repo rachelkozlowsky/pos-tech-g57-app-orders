@@ -6,8 +6,10 @@ import br.com.five.seven.food.application.domain.Product;
 import br.com.five.seven.food.application.domain.enums.OrderStatus;
 import br.com.five.seven.food.application.ports.in.CategoryServiceIn;
 import br.com.five.seven.food.application.ports.in.OrderServiceIn;
+import br.com.five.seven.food.application.ports.out.IClientApiOut;
 import br.com.five.seven.food.application.ports.out.IOrderRepositoryOut;
 import br.com.five.seven.food.application.ports.out.IProductRepositoryOut;
+import br.com.five.seven.food.infra.exceptions.ClientNotFoundException;
 import jakarta.xml.bind.ValidationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,11 +23,14 @@ public class OrderService implements OrderServiceIn {
     private final IOrderRepositoryOut orderRepository;
     private final IProductRepositoryOut productRepository;
     private final CategoryServiceIn categoryService;
+    private final IClientApiOut clientApiOut;
 
-    public OrderService(IOrderRepositoryOut orderRepository, IProductRepositoryOut productRepository, CategoryServiceIn categoryService) {
+    public OrderService(IOrderRepositoryOut orderRepository, IProductRepositoryOut productRepository,
+                        CategoryServiceIn categoryService, IClientApiOut clientApiOut) {
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
         this.categoryService = categoryService;
+        this.clientApiOut = clientApiOut;
     }
 
     public Page<Order> findAll(Pageable pageable) {
@@ -109,7 +114,9 @@ public class OrderService implements OrderServiceIn {
     }
 
     private void validateAndPopulateOrder(Order order) throws ValidationException {
-        //TODO search client cpf validation
+        // Validate client if CPF is provided
+        validateClient(order.getCpfClient());
+
         List<Item> items = order.getItems();
 
         if (items == null || items.isEmpty()) {
@@ -120,6 +127,14 @@ public class OrderService implements OrderServiceIn {
 
         order.setTotalAmount(order.calculateTotalAmount());
         order.setRemainingTime(calculateTime(order.getReceivedAt(), order.getOrderStatus()));
+    }
+
+    private void validateClient(String cpfClient) {
+        if (cpfClient != null && !cpfClient.isBlank()) {
+            clientApiOut.getClientByCpf(cpfClient)
+                .orElseThrow(() -> new ClientNotFoundException(
+                    "Client with CPF " + cpfClient + " not found"));
+        }
     }
 
     private void validateAndSetProducts(List<Item> items) throws ValidationException {

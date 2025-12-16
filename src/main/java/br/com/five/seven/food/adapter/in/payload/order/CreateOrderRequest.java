@@ -14,14 +14,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateOrderRequest {
-
     private String cpfClient;
-
     @NotNull
     private String title;
-
     private String description;
-
     @Size(min = 1)
     @Valid
     private List<ItemRequest> items;

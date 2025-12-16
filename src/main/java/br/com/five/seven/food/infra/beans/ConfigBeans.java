@@ -1,6 +1,7 @@
 package br.com.five.seven.food.infra.beans;
 
 import br.com.five.seven.food.application.ports.out.ICategoryRepositoryOut;
+import br.com.five.seven.food.application.ports.out.IClientApiOut;
 import br.com.five.seven.food.application.ports.out.IOrderRepositoryOut;
 import br.com.five.seven.food.application.ports.out.IProductRepositoryOut;
 import br.com.five.seven.food.application.service.CategoryService;
@@ -23,7 +24,7 @@ public class ConfigBeans {
     }
 
     @Bean
-    public OrderService orderServiceIn(IOrderRepositoryOut orderRepositoryOut, IProductRepositoryOut productRepository, CategoryService categoryService) {
-        return new OrderService(orderRepositoryOut, productRepository, categoryService);
+    public OrderService orderServiceIn(IOrderRepositoryOut orderRepositoryOut, IProductRepositoryOut productRepository, CategoryService categoryService, IClientApiOut clientApi) {
+        return new OrderService(orderRepositoryOut, productRepository, categoryService, clientApi);
     }
 }

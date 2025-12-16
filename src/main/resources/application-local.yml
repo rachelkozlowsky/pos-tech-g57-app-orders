@@ -14,3 +14,7 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+api:
+  client:
+    url: ${CLIENT_API_URL:http://localhost:8081}
