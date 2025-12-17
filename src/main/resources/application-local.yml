@@ -15,6 +15,9 @@ spring:
       ddl-auto: update
     show-sql: true
 
+server:
+  port: 8010
+  
 api:
   client:
-    url: ${CLIENT_API_URL:http://localhost:8081}
+    url: ${CLIENT_API_URL:http://localhost:8091}

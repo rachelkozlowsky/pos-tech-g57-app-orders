@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 )
 public interface ClientApiClient {
 
-    @GetMapping("/clients/{cpf}")
+    @GetMapping("/v1/clients/{cpf}")
     ClientResponse getClientByCpf(@PathVariable("cpf") String cpf);
 }
 
