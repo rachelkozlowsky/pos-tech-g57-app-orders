@@ -17,3 +17,8 @@ springdoc:
     path: /swagger-ui.html
 user: admin
 pass: admin
+
+api:
+  client:
+    url: ${CLIENT_API_URL:http://localhost:8081}
+

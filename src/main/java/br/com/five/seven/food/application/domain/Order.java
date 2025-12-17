@@ -4,6 +4,8 @@ import br.com.five.seven.food.application.domain.enums.OrderStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Order extends TimeAt{
 
@@ -12,18 +14,18 @@ public class Order extends TimeAt{
     private String description;
     private OrderStatus orderStatus;
     private String cpfClient;
-    private Combo combo;
+    private List<Item> items = new ArrayList<>();
     private BigDecimal totalAmount;
     private LocalDateTime receivedAt;
     private String remainingTime;
 
-    public Order(Long id, String title, String description, OrderStatus orderStatus, String cpfClient, Combo combo, BigDecimal totalAmount, LocalDateTime receivedAt, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Order(Long id, String title, String description, OrderStatus orderStatus, String cpfClient, List<Item> items, BigDecimal totalAmount, LocalDateTime receivedAt, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.orderStatus = orderStatus;
         this.cpfClient = cpfClient;
-        this.combo = combo;
+        this.items = items != null ? items : new ArrayList<>();
         this.totalAmount = totalAmount;
         this.receivedAt = receivedAt;
         this.createdAt = createdAt;
@@ -72,12 +74,12 @@ public class Order extends TimeAt{
         this.cpfClient = cpfClient;
     }
 
-    public Combo getCombo() {
-        return combo;
+    public List<Item> getItems() {
+        return items;
     }
 
-    public void setCombo(Combo combo) {
-        this.combo = combo;
+    public void setItems(List<Item> items) {
+        this.items = items != null ? items : new ArrayList<>();
     }
 
     public BigDecimal getTotalAmount() {
@@ -86,6 +88,12 @@ public class Order extends TimeAt{
 
     public void setTotalAmount(BigDecimal totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    public BigDecimal calculateTotalAmount() {
+        return items.stream()
+                .map(Item::getTotalPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public LocalDateTime getReceivedAt() {

@@ -30,6 +30,18 @@ public class ProductEntity {
     @JoinColumn(name = "category_id")
     private CategoryEntity category;
 
+    public ProductEntity() {}
+
+    public ProductEntity(Long id, String name, String description, BigDecimal price, Boolean active, List<ImageEntity> images, CategoryEntity category) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.active = active;
+        this.images = images;
+        this.category = category;
+    }
+
     // Getters and setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }

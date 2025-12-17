@@ -15,6 +15,8 @@ public class CategoryEntity {
     @Column(nullable = false)
     private boolean active;
 
+    public  CategoryEntity() {}
+
     public CategoryEntity(Long id, String name, boolean active) {
         this.id = id;
         this.name = name;

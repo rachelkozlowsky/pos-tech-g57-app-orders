@@ -1,7 +1,12 @@
 version: "3.8"
 services:
-  mongodb:
-    image: mongo:latest
-    container_name: "mongodb"
+  postgres:
+    image: postgres:latest
+    container_name: "postgres"
     ports:
-      - 27070:27017
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=food_orders_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+    restart: unless-stopped

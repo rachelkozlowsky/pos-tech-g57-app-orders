@@ -3,6 +3,8 @@ package br.com.five.seven.food.adapter.out.relational.entity;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -23,13 +25,13 @@ public class OrderEntity {
     @Column(nullable = false)
     private String cpfClient;
 
-    @Transient
-    private ComboEntity combo;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<ItemEntity> items = new ArrayList<>();
 
     @Column(nullable = false)
     private BigDecimal totalAmount;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDateTime receivedAt;
 
     @Column
@@ -44,13 +46,13 @@ public class OrderEntity {
     public OrderEntity() {
     }
 
-    public OrderEntity(Long id, String title, String description, String orderStatus, String cpfClient, ComboEntity combo, BigDecimal totalAmount, LocalDateTime receivedAt, String remainingTime, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public OrderEntity(Long id, String title, String description, String orderStatus, String cpfClient, List<ItemEntity> items, BigDecimal totalAmount, LocalDateTime receivedAt, String remainingTime, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.orderStatus = orderStatus;
         this.cpfClient = cpfClient;
-        this.combo = combo;
+        this.items = items != null ? items : new ArrayList<>();
         this.totalAmount = totalAmount;
         this.receivedAt = receivedAt;
         this.remainingTime = remainingTime;
@@ -69,8 +71,24 @@ public class OrderEntity {
     public void setOrderStatus(String orderStatus) { this.orderStatus = orderStatus; }
     public String getCpfClient() { return cpfClient; }
     public void setCpfClient(String cpfClient) { this.cpfClient = cpfClient; }
-    public ComboEntity getCombo() { return combo; }
-    public void setCombo(ComboEntity combo) { this.combo = combo; }
+
+    public List<ItemEntity> getItems() { return items; }
+    public void setItems(List<ItemEntity> items) {
+        this.items = items != null ? items : new ArrayList<>();
+        // Set bidirectional relationship
+        this.items.forEach(item -> item.setOrder(this));
+    }
+
+    public void addItem(ItemEntity item) {
+        items.add(item);
+        item.setOrder(this);
+    }
+
+    public void removeItem(ItemEntity item) {
+        items.remove(item);
+        item.setOrder(null);
+    }
+
     public BigDecimal getTotalAmount() { return totalAmount; }
     public void setTotalAmount(BigDecimal totalAmount) { this.totalAmount = totalAmount; }
     public LocalDateTime getReceivedAt() { return receivedAt; }

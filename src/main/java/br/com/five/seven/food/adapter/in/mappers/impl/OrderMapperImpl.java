@@ -1,14 +1,13 @@
 package br.com.five.seven.food.adapter.in.mappers.impl;
 
-import br.com.five.seven.food.adapter.in.mappers.ComboMapper;
+import br.com.five.seven.food.adapter.in.mappers.ItemMapper;
 import br.com.five.seven.food.adapter.in.mappers.OrderMapper;
-import br.com.five.seven.food.adapter.in.payload.combo.ComboRequest;
 import br.com.five.seven.food.adapter.in.payload.order.CreateOrderRequest;
 import br.com.five.seven.food.adapter.in.payload.order.OrderMonitorResponse;
 import br.com.five.seven.food.adapter.in.payload.order.OrderResponse;
+import br.com.five.seven.food.adapter.in.payload.order.UpdateOrderItemsRequest;
 import br.com.five.seven.food.adapter.in.payload.order.UpdateOrderRequest;
 import br.com.five.seven.food.adapter.out.relational.entity.OrderEntity;
-import br.com.five.seven.food.application.domain.Combo;
 import br.com.five.seven.food.application.domain.Order;
 import br.com.five.seven.food.application.domain.enums.OrderStatus;
 import lombok.RequiredArgsConstructor;
@@ -21,42 +20,52 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class OrderMapperImpl implements OrderMapper {
 
-    private final ComboMapper comboMapper;
+    private final ItemMapper itemMapper;
 
     @Override
     public Order createRequestToDomain(CreateOrderRequest createOrderRequest) {
-        Combo combo = comboMapper.requestToDomain(createOrderRequest.getCombo());
-
-        return new Order(
+        Order order = new Order(
                 null,
                 createOrderRequest.getTitle(),
                 createOrderRequest.getDescription(),
                 OrderStatus.CREATED,
                 createOrderRequest.getCpfClient(),
-                combo,
+                null,  // Items set below to establish bidirectional relationship
                 BigDecimal.ZERO,
                 null,
                 LocalDateTime.now(),
                 LocalDateTime.now()
         );
+
+        // Map items and establish bidirectional relationship
+        var items = itemMapper.requestListToDomainList(createOrderRequest.getItems());
+        items.forEach(item -> item.setOrder(order));
+        order.setItems(items);
+
+        return order;
     }
 
     @Override
     public Order updateRequestToDomain(Long id, UpdateOrderRequest updateOrderRequest) {
-        Combo combo = comboMapper.requestToDomain(updateOrderRequest.getCombo());
-
-        return new Order(
+        Order order = new Order(
                 id,
                 updateOrderRequest.getTitle(),
                 updateOrderRequest.getDescription(),
                 updateOrderRequest.getOrderStatus(),
                 updateOrderRequest.getCpfClient(),
-                combo,
+                null,  // Items set below to establish bidirectional relationship
                 BigDecimal.ZERO,
                 null,
                 null,
                 null
         );
+
+        // Map items and establish bidirectional relationship
+        var items = itemMapper.requestListToDomainList(updateOrderRequest.getItems());
+        items.forEach(item -> item.setOrder(order));
+        order.setItems(items);
+
+        return order;
     }
 
     @Override
@@ -67,9 +76,9 @@ public class OrderMapperImpl implements OrderMapper {
                 order.getDescription(),
                 order.getOrderStatus(),
                 order.getCpfClient(),
-                comboMapper.domainToResponse(order.getCombo()),
+                itemMapper.domainListToResponseList(order.getItems()),
                 order.getTotalAmount(),
-                order.getUpdatedAt(),
+                order.getReceivedAt(),
                 order.getUpdatedAt(),
                 order.getRemainingTime()
         );
@@ -77,37 +86,49 @@ public class OrderMapperImpl implements OrderMapper {
 
     @Override
     public OrderEntity domainToEntity(Order order) {
-        return new OrderEntity(
+        OrderEntity orderEntity = new OrderEntity(
                 order.getId(),
                 order.getTitle(),
                 order.getDescription(),
                 order.getOrderStatus().name(),
                 order.getCpfClient(),
-                comboMapper.domainToEntity(order.getCombo()),
+                null,  // Items set below to establish bidirectional relationship
                 order.getTotalAmount(),
                 order.getReceivedAt(),
                 order.getRemainingTime(),
                 order.getCreatedAt(),
                 order.getUpdatedAt()
         );
+
+        // Map items and establish bidirectional relationship
+        var items = itemMapper.domainListToEntityList(order.getItems());
+        items.forEach(item -> item.setOrder(orderEntity));
+        orderEntity.setItems(items);
+
+        return orderEntity;
     }
 
     @Override
     public Order entityToDomain(OrderEntity orderEntity) {
-        Combo combo = comboMapper.entityToDomain(orderEntity.getCombo());
-
-        return new Order(
+        Order order = new Order(
                 orderEntity.getId(),
                 orderEntity.getTitle(),
                 orderEntity.getDescription(),
                 OrderStatus.valueOf(orderEntity.getOrderStatus()),
                 orderEntity.getCpfClient(),
-                combo,
+                null,  // Items set below to establish bidirectional relationship
                 orderEntity.getTotalAmount(),
                 orderEntity.getReceivedAt(),
                 orderEntity.getCreatedAt(),
                 orderEntity.getUpdatedAt()
         );
+
+        // Map items and establish bidirectional relationship
+        var items = itemMapper.entityListToDomainList(orderEntity.getItems());
+        items.forEach(item -> item.setOrder(order));
+        order.setItems(items);
+
+        return order;
     }
 
     @Override
@@ -125,20 +146,25 @@ public class OrderMapperImpl implements OrderMapper {
     }
 
     @Override
-    public Order updateOrderComboRequestToDomain(Long id, ComboRequest comboRequest) {
-        Combo combo = comboMapper.requestToDomain(comboRequest);
-
-        return new Order(
+    public Order updateOrderItemsRequestToDomain(Long id, UpdateOrderItemsRequest updateOrderItemsRequest) {
+        Order order = new Order(
                 id,
                 null,
                 null,
                 null,
                 null,
-                combo,
+                null,  // Items set below to establish bidirectional relationship
                 null,
                 null,
                 null,
                 null
         );
+
+        // Map items and establish bidirectional relationship
+        var items = itemMapper.requestListToDomainList(updateOrderItemsRequest.getItems());
+        items.forEach(item -> item.setOrder(order));
+        order.setItems(items);
+
+        return order;
     }
 }

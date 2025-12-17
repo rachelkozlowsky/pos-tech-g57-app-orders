@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Data
@@ -30,7 +29,6 @@ public class ProductRequest {
 
     public Product toDomain(Category category) {
         Product product = new Product();
-        product.setId(1L);
         product.setName(this.name);
         product.setDescription(this.description);
         product.setPrice(this.price);

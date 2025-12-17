@@ -19,3 +19,8 @@ springdoc:
     enabled: true
   swagger-ui:
     path: /swagger-ui.html
+
+api:
+  client:
+    url: ${CLIENT_API_URL:http://api-client-service:8080}
+

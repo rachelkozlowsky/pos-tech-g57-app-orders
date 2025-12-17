@@ -1,8 +1,8 @@
 package br.com.five.seven.food.adapter.in.controller;
 
 import br.com.five.seven.food.adapter.in.mappers.OrderMapper;
-import br.com.five.seven.food.adapter.in.payload.combo.ComboRequest;
 import br.com.five.seven.food.adapter.in.payload.order.CreateOrderRequest;
+import br.com.five.seven.food.adapter.in.payload.order.UpdateOrderItemsRequest;
 import br.com.five.seven.food.adapter.in.payload.order.OrderMonitorResponse;
 import br.com.five.seven.food.adapter.in.payload.order.OrderResponse;
 import br.com.five.seven.food.adapter.in.payload.order.UpdateOrderRequest;
@@ -103,9 +103,9 @@ public class OrderController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/{id}/combo")
-    public ResponseEntity<OrderResponse> updateOrderCombo(@PathVariable Long id, @Valid @RequestBody ComboRequest comboRequest) throws ValidationException {
-        Order order = orderService.updateOrderCombo(id, orderMapper.updateOrderComboRequestToDomain(id, comboRequest));
+    @PutMapping("/{id}/items")
+    public ResponseEntity<OrderResponse> updateOrderItems(@PathVariable Long id, @Valid @RequestBody UpdateOrderItemsRequest updateOrderItemsRequest) throws ValidationException {
+        Order order = orderService.updateOrderItems(id, orderMapper.updateOrderItemsRequestToDomain(id, updateOrderItemsRequest));
         return ResponseEntity.ok(orderMapper.domainToResponse(order));
     }
 
