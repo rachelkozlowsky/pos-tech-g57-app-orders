@@ -2,8 +2,8 @@ package br.com.five.seven.food.adapter.in.mappers.impl;
 
 import br.com.five.seven.food.adapter.in.mappers.ItemMapper;
 import br.com.five.seven.food.adapter.in.mappers.ProductMapper;
-import br.com.five.seven.food.adapter.in.payload.combo.item.ItemRequest;
-import br.com.five.seven.food.adapter.in.payload.combo.item.ItemResponse;
+import br.com.five.seven.food.adapter.in.payload.item.ItemRequest;
+import br.com.five.seven.food.adapter.in.payload.item.ItemResponse;
 import br.com.five.seven.food.adapter.out.relational.entity.ItemEntity;
 import br.com.five.seven.food.application.domain.Item;
 import br.com.five.seven.food.application.domain.Product;
@@ -25,19 +25,27 @@ public class ItemMapperImpl implements ItemMapper {
 
     @Override
     public ItemEntity domainToEntity(Item item) {
+        // Note: Order relationship is set by OrderMapperImpl to avoid circular reference
         return new ItemEntity(
-                1L,
+                item.getId(),
                 productMapper.fromDomain(item.getProduct()),
                 item.getQuantity(),
-                null
+                null  // Will be set by parent Order mapper
         );
     }
 
     @Override
     public Item entityToDomain(ItemEntity itemEntity) {
-        Product product = new Product();
-        product.setId(itemEntity.getProduct().getId());
-        return new Item(null, product, itemEntity.getQuantity());
+        // Map the full product from entity
+        Product product = productMapper.toDomain(itemEntity.getProduct());
+
+        // Create item without order to avoid circular reference
+        // Order relationship managed at Order level
+        return new Item(
+                itemEntity.getId(),
+                product,
+                itemEntity.getQuantity()
+        );
     }
 
     @Override

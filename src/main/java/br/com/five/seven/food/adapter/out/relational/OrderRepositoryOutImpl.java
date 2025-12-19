@@ -28,19 +28,7 @@ public class OrderRepositoryOutImpl implements IOrderRepositoryOut {
     }
 
     private Order toDomain(OrderEntity entity) {
-        // TODO: Map all fields and relationships as needed
-        Order order = new Order();
-        order.setId(entity.getId());
-        order.setTitle(entity.getTitle());
-        order.setDescription(entity.getDescription());
-        order.setOrderStatus(OrderStatus.valueOf(entity.getOrderStatus()));
-        order.setCpfClient(entity.getCpfClient());
-        order.setTotalAmount(entity.getTotalAmount());
-        order.setReceivedAt(entity.getReceivedAt());
-        order.setRemainingTime(entity.getRemainingTime());
-        order.setCreatedAt(entity.getCreatedAt());
-        order.setUpdatedAt(entity.getUpdatedAt());
-        return order;
+        return orderMapper.entityToDomain(entity);
     }
 
     @Override

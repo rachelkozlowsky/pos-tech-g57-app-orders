@@ -1,5 +1,6 @@
 package br.com.five.seven.food.infra.handler;
 
+import br.com.five.seven.food.infra.exceptions.ClientNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
@@ -22,6 +23,19 @@ public class HandlerAdvice {
         );
         problemDetail.setTitle("Erro Interno do Servidor");
         problemDetail.setDetail(ex.getMessage());
+        problemDetail.setProperty("path", request.getRequestURL().toString());
+        problemDetail.setProperty("error", ex.getClass().getSimpleName());
+
+        return problemDetail;
+    }
+
+    @ExceptionHandler(ClientNotFoundException.class)
+    public ProblemDetail handleClientNotFoundException(ClientNotFoundException ex, HttpServletRequest request) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
+                HttpStatus.NOT_FOUND,
+                ex.getMessage()
+        );
+        problemDetail.setTitle("Cliente Não Encontrado");
         problemDetail.setProperty("path", request.getRequestURL().toString());
         problemDetail.setProperty("error", ex.getClass().getSimpleName());
 

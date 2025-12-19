@@ -7,11 +7,19 @@ public class Item {
     private Long id;
     private Product product;
     private Integer quantity;
+    private Order order;
 
     public Item(Long id, Product product, Integer quantity) {
         this.id = id;
         this.product = product;
         this.quantity = quantity;
+    }
+
+    public Item(Long id, Product product, Integer quantity, Order order) {
+        this.id = id;
+        this.product = product;
+        this.quantity = quantity;
+        this.order = order;
     }
 
     public Item() {}
@@ -38,6 +46,14 @@ public class Item {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public BigDecimal getTotalPrice() {

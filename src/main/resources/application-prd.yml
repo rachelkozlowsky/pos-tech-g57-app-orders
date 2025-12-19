@@ -1,6 +1,7 @@
 spring:
   config:
-    import: aws-secretsmanager:production/rds/postgres-v3
+    import:
+      - optional:aws-secretsmanager:production/rds/postgres-v3
   cloud:
     aws:
       region:
@@ -18,3 +19,8 @@ springdoc:
     enabled: true
   swagger-ui:
     path: /swagger-ui.html
+
+api:
+  client:
+    url: ${CLIENT_API_URL:http://api-client-service:8080}
+

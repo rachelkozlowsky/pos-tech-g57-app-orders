@@ -1,8 +1,23 @@
 spring:
+  cloud:
+    aws:
+      region:
+        static: us-east-1
   application:
     name: api-food
   datasource:
-    url: jdbc:postgresql://localhost:5432/food_oders_db
+    url: jdbc:postgresql://localhost:5432/food_orders_db
     username: postgres
     password: admin
     driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+server:
+  port: 8010
+  
+api:
+  client:
+    url: ${CLIENT_API_URL:http://localhost:8091}

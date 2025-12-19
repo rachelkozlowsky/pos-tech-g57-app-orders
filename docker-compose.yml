@@ -6,29 +6,17 @@ services:
     ports:
       - 8080:8080
     depends_on:
-      - mongodb
+      - postgres
     networks:
       - api-food-network
     environment:
-      - SPRING_DATA_MONGODB_URI=mongodb://admin:123456@mongodb:27017/fooddb?authSource=admin
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/food_orders_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=admin
     # env_file: des.env
 
-  mongodb:
-    image: mongo:latest
-    container_name: "mongodb"
-    ports:
-      - 27017:27017
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=123456
-    volumes:
-      - mongodb_data:/data/db
-    restart: unless-stopped
-    networks:
-      - api-food-network
-
 volumes:
-  mongodb_data: {}
+  postgres_data: {}
 networks:
   api-food-network:
     driver: bridge

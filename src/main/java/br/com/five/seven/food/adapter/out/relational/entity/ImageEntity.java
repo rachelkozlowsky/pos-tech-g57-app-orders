@@ -16,6 +16,13 @@ public class ImageEntity {
     @JoinColumn(name = "product_id")
     private ProductEntity product;
 
+    public ImageEntity() {}
+
+    public ImageEntity(Long id, String url, ProductEntity product) {
+        this.id = id;
+        this.url = url;
+    }
+
     // Getters and setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }

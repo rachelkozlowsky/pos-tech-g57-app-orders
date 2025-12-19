@@ -1,13 +1,15 @@
 package br.com.five.seven.food.application.service;
 
-import br.com.five.seven.food.application.domain.Combo;
 import br.com.five.seven.food.application.domain.Item;
 import br.com.five.seven.food.application.domain.Order;
 import br.com.five.seven.food.application.domain.Product;
 import br.com.five.seven.food.application.domain.enums.OrderStatus;
+import br.com.five.seven.food.application.ports.in.CategoryServiceIn;
 import br.com.five.seven.food.application.ports.in.OrderServiceIn;
+import br.com.five.seven.food.application.ports.out.IClientApiOut;
 import br.com.five.seven.food.application.ports.out.IOrderRepositoryOut;
 import br.com.five.seven.food.application.ports.out.IProductRepositoryOut;
+import br.com.five.seven.food.infra.exceptions.ClientNotFoundException;
 import jakarta.xml.bind.ValidationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,50 +21,37 @@ import java.util.List;
 public class OrderService implements OrderServiceIn {
 
     private final IOrderRepositoryOut orderRepository;
-
     private final IProductRepositoryOut productRepository;
+    private final CategoryServiceIn categoryService;
+    private final IClientApiOut clientApiOut;
 
-    public OrderService(IOrderRepositoryOut orderRepository, IProductRepositoryOut productRepository) {
+    public OrderService(IOrderRepositoryOut orderRepository, IProductRepositoryOut productRepository,
+                        CategoryServiceIn categoryService, IClientApiOut clientApiOut) {
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
+        this.categoryService = categoryService;
+        this.clientApiOut = clientApiOut;
     }
 
     public Page<Order> findAll(Pageable pageable) {
-        return orderRepository.findAll(pageable)
-                .map(order -> {
-                    try {
-                        return validateAndPopulateOrder(order, true);
-                    } catch (ValidationException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
+        return orderRepository.findAll(pageable);
     }
 
     public Page<Order> findAllByOrderStatus(List<OrderStatus> orderStatus, Pageable pageable) {
-        return orderRepository.findAllByOrderStatus(orderStatus, pageable)
-                .map(order -> {
-                    try {
-                        return validateAndPopulateOrder(order, true);
-                    } catch (ValidationException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
+        return orderRepository.findAllByOrderStatus(orderStatus, pageable);
     }
 
-    public Order findById(Long id) throws ValidationException {
-        return validateAndPopulateOrder(orderRepository.findById(id), true);
+    public Order findById(Long id) {
+        return orderRepository.findById(id);
     }
 
     public Order create(Order order) throws ValidationException {
-        validateAndPopulateOrder(order, false);
-        var orderSave = orderRepository.save(order);
-        validateAndPopulateOrder(orderSave, false);
-        return orderSave;
+        validateAndPopulateOrder(order);
+        return orderRepository.save(order);
     }
 
     public Order update(Long id, Order order) throws ValidationException {
         Order orderToBeUpdated = findById(id);
-        validateAndPopulateOrder(order, false);
         order.setId(orderToBeUpdated.getId());
         order.setUpdatedAt(LocalDateTime.now());
         return orderRepository.update(order);
@@ -76,7 +65,7 @@ public class OrderService implements OrderServiceIn {
         return orderRepository.save(order);
     }
 
-    public Order updateStatusOrder(Long orderId, OrderStatus orderStatus) throws ValidationException {
+    public Order updateStatusOrder(Long orderId, OrderStatus orderStatus) {
         Order order = findById(orderId);
         order.setOrderStatus(orderStatus);
 
@@ -89,8 +78,7 @@ public class OrderService implements OrderServiceIn {
         return save(order);
     }
 
-    public Order advanceOrderStatus(Long orderId) throws ValidationException {
-
+    public Order advanceOrderStatus(Long orderId) {
         Order order = findById(orderId);
         OrderStatus current = order.getOrderStatus();
 
@@ -110,60 +98,78 @@ public class OrderService implements OrderServiceIn {
         if (next == OrderStatus.RECEIVED) {
             order.setReceivedAt(LocalDateTime.now());
         }
+
         order.setUpdatedAt(LocalDateTime.now());
         return save(order);
     }
 
     @Override
-    public Order updateOrderCombo(Long id, Order order) throws ValidationException {
+    public Order updateOrderItems(Long id, Order order) throws ValidationException {
         Order orderToBeUpdated = findById(id);
-        validateAndPopulateOrder(order, false);
-        validateAndPopulateOrder(orderToBeUpdated, true);
-        orderToBeUpdated.setCombo(order.getCombo());
-        order.setUpdatedAt(LocalDateTime.now());
-        return orderRepository.update(order);
+        validateAndPopulateOrder(order);
+        orderToBeUpdated.setItems(order.getItems());
+        orderToBeUpdated.setTotalAmount(orderToBeUpdated.calculateTotalAmount());
+        orderToBeUpdated.setUpdatedAt(LocalDateTime.now());
+        return orderRepository.update(orderToBeUpdated);
     }
 
-    private Order validateAndPopulateOrder(Order order, boolean isSearch) throws ValidationException {
-        if (order.getCpfClient() != null) {
-            //TODO search client cpf validation
+    private void validateAndPopulateOrder(Order order) throws ValidationException {
+        // Validate client if CPF is provided
+        validateClient(order.getCpfClient());
+
+        List<Item> items = order.getItems();
+
+        if (items == null || items.isEmpty()) {
+            throw new ValidationException("Order must have at least one item.");
         }
 
-        Combo combo = order.getCombo();
-        List<Item> snack = combo.getSnack();
-        List<Item> garnish = combo.getGarnish();
-        List<Item> drink = combo.getDrink();
-        List<Item> dessert = combo.getDessert();
+        validateAndSetProducts(items);
 
-        validateAndSetProducts(snack, isSearch);
-        validateAndSetProducts(garnish, isSearch);
-        validateAndSetProducts(drink, isSearch);
-        validateAndSetProducts(dessert, isSearch);
-
-        if (snack.isEmpty() && garnish.isEmpty() && drink.isEmpty() && dessert.isEmpty()) {
-            throw new RuntimeException("Order cannot be empty.");
-        }
-
-        order.setTotalAmount(combo.getTotalPrice());
+        order.setTotalAmount(order.calculateTotalAmount());
         order.setRemainingTime(calculateTime(order.getReceivedAt(), order.getOrderStatus()));
-
-        return order;
     }
 
-    private void validateAndSetProducts(List<Item> items, boolean isSearch) {
-        items.forEach(item -> {
-            if (!isSearch && item.getQuantity() < 1) {
-                throw new RuntimeException("The combo must have at least one product with quantity 1.");
+    private void validateClient(String cpfClient) {
+        if (cpfClient != null && !cpfClient.isBlank()) {
+            clientApiOut.getClientByCpf(cpfClient)
+                .orElseThrow(() -> new ClientNotFoundException(
+                    "Client with CPF " + cpfClient + " not found"));
+        }
+    }
+
+    private void validateAndSetProducts(List<Item> items) throws ValidationException {
+        for (Item item : items) {
+            if (item.getQuantity() < 1) {
+                throw new ValidationException("Each item must have at least quantity 1.");
             }
 
             Product product = productRepository.getById(item.getProduct().getId());
 
-            if (!isSearch && !product.isActive()) {
-                throw new RuntimeException("One or more products in the combo are not available.");
+            if (product == null) {
+                throw new ValidationException("Product with ID " + item.getProduct().getId() + " not found.");
+            }
+
+            if (!product.isActive()) {
+                throw new ValidationException("Product '" + product.getName() + "' is not available.");
+            }
+
+            // Validate product category
+            if (product.getCategory() == null) {
+                throw new ValidationException("Product '" + product.getName() + "' does not have a category assigned.");
+            }
+
+            // Ensure category exists and is active
+            var category = categoryService.getCategoryById(product.getCategory().getId());
+            if (category == null) {
+                throw new ValidationException("Category for product '" + product.getName() + "' not found.");
+            }
+
+            if (!category.isActive()) {
+                throw new ValidationException("Category '" + category.getName() + "' is not active.");
             }
 
             item.setProduct(product);
-        });
+        }
     }
 
     public static String calculateTime(LocalDateTime initial, OrderStatus orderStatus) {

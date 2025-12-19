@@ -8,7 +8,6 @@ import br.com.five.seven.food.application.ports.out.ICategoryRepositoryOut;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -42,9 +41,7 @@ public class CategoryRepositoryOutImpl implements ICategoryRepositoryOut {
 
     @Override
     public Category getByName(String categoryName) {
-        return categoryRepository.findAll().stream()
-                .filter(e -> e.getName().equalsIgnoreCase(categoryName))
-                .findFirst()
+        return categoryRepository.findByNameIgnoreCase(categoryName)
                 .map(this::toDomain)
                 .orElse(null);
     }
