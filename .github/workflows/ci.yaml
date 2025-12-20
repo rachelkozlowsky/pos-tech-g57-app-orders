@@ -9,7 +9,7 @@ on:
 
 jobs:
   call-reusable-build-and-test-workflow:
-    uses: rachelkozlowsky/nested-reusable-java-maven-eks/.github/workflows/build.yml@main
+    uses: railsonribeiro/nested-reusable-java-maven-eks/.github/workflows/build.yml@main
     with:
       app_name: "pos-tech-g57-app-orders"
       dockerhub_username: "postechf57"

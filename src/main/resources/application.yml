@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: ${ENVIRONMENT_PROFILE_VALUE:prd}
+    active: ${ENVIRONMENT_PROFILE_VALUE:local}
   application:
     name: api-food-orders
   jpa:

@@ -4,11 +4,5 @@ metadata:
   name: api-config-orders
   namespace: orders
 data:
-  PAYMENT_INTEGRATION_HOST: "https://api.mercadopago.com/"
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: api-secret
-data: {}
-type: Opaque
+  ENVIRONMENT_PROFILE_VALUE: prd
+
