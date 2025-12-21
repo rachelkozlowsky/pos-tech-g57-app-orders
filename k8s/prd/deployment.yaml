@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: api-food-orders
-          image: postechf57/pos-tech-g57-app-orders:0.0.8
+          image: postechf57/pos-tech-g57-app-orders:0.0.10
           ports:
             - containerPort: 8080
           envFrom:
