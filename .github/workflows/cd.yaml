@@ -8,10 +8,10 @@ on:
 jobs:
 
   call-reusable-deploy-workflow:
-    uses: rachelkozlowsky/nested-reusable-java-maven-eks/.github/workflows/deploy.yml@main
+    uses: railsonribeiro/nested-reusable-java-maven-eks-fork/.github/workflows/deploy.yml@main
     with:
-      cluster_name: "eks-postech-g57"
+      cluster_name: "eks-postech-g57-railson"
       argo_app_name: "orders-api"
       namespace: "orders"
-      git_repo_url: "https://github.com/rachelkozlowsky/pos-tech-g57-app-orders"
+      git_repo_url: "https://github.com/railsonribeiro/pos-tech-g57-app-orders-forked"
     secrets: inherit
