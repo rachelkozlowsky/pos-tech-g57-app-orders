@@ -9,9 +9,7 @@ on:
 
 jobs:
   call-reusable-build-and-test-workflow:
-    uses: railsonribeiro/nested-reusable-java-maven-eks-fork/.github/workflows/build.yml@main
+    uses: rachelkozlowsky/nested-reusable-java-maven-eks/.github/workflows/build.yml@main
     with:
       app_name: "pos-tech-g57-app-orders"
     secrets: inherit
-
- 
