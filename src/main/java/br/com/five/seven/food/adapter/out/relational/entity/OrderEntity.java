@@ -22,7 +22,7 @@ public class OrderEntity {
     @Column(nullable = false)
     private String orderStatus;
 
-    @Column(nullable = false)
+    @Column()
     private String cpfClient;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
