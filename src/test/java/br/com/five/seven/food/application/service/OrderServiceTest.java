@@ -1,5 +1,6 @@
 package br.com.five.seven.food.application.service;
 
+import br.com.five.seven.food.adapter.out.api.response.ClientResponse;
 import br.com.five.seven.food.application.domain.Category;
 import br.com.five.seven.food.application.domain.Item;
 import br.com.five.seven.food.application.domain.Order;
@@ -451,6 +452,141 @@ class OrderServiceTest {
 
         // Then: Expired message should be returned
         assertEquals("O prazo de preparacao do pedido expirou", result, "Should return expired message");
+    }
+
+    @Test
+    @DisplayName("Scenario: Return null when initial time is null")
+    void givenNullInitialTime_whenCalculatingTime_thenNullShouldBeReturned() {
+        // Given: Null initial time
+        LocalDateTime receivedAt = null;
+
+        // When: Calculating time
+        String result = OrderService.calculateTime(receivedAt, OrderStatus.SENT);
+
+        // Then: Null should be returned
+        assertNull(result, "Should return null when initial time is null");
+    }
+
+    @Test
+    @DisplayName("Scenario: Fail to advance order status when status is null")
+    void givenOrderWithNullStatus_whenAdvancingStatus_thenIllegalStateExceptionShouldBeThrown() {
+        // Given: An order with null status
+        Order order = createValidOrder(1L, OrderStatus.SENT);
+        order.setOrderStatus(null);
+        when(orderRepository.findById(1L)).thenReturn(order);
+
+        // When & Then: Advancing status should throw IllegalStateException
+        IllegalStateException exception = assertThrows(
+            IllegalStateException.class,
+            () -> orderService.advanceOrderStatus(1L),
+            "Should throw IllegalStateException for null status"
+        );
+
+        assertEquals("A ordem não possui status.", exception.getMessage());
+        verify(orderRepository, never()).save(any());
+    }
+
+    @Test
+    @DisplayName("Scenario: Successfully create order with valid client CPF")
+    void givenOrderWithValidClientCpf_whenCreatingOrder_thenOrderShouldBeCreated() throws ValidationException {
+        // Given: An order with valid client CPF
+        Order order = createValidOrder(null, OrderStatus.SENT);
+        order.setCpfClient("12345678900");
+        Product product = createValidProduct();
+        Category category = createValidCategory();
+
+        ClientResponse clientResponse = new ClientResponse();
+        clientResponse.setCpf("12345678900");
+        when(clientApiOut.getClientByCpf("12345678900")).thenReturn(Optional.of(clientResponse));
+        when(productRepository.getById(1L)).thenReturn(product);
+        when(categoryService.getCategoryById(1L)).thenReturn(category);
+        when(orderRepository.save(any(Order.class))).thenReturn(order);
+
+        // When: Creating the order
+        Order result = orderService.create(order);
+
+        // Then: The order should be created successfully
+        assertNotNull(result, "Created order should not be null");
+        verify(clientApiOut, times(1)).getClientByCpf("12345678900");
+        verify(orderRepository, times(1)).save(any(Order.class));
+    }
+
+    @Test
+    @DisplayName("Scenario: Fail to create order when product is not found")
+    void givenOrderWithNonExistentProduct_whenCreatingOrder_thenValidationExceptionShouldBeThrown() {
+        // Given: An order with non-existent product
+        Order order = createValidOrder(null, OrderStatus.SENT);
+
+        when(productRepository.getById(1L)).thenReturn(null);
+
+        // When & Then: Creating order should throw ValidationException
+        ValidationException exception = assertThrows(
+            ValidationException.class,
+            () -> orderService.create(order),
+            "Should throw ValidationException for non-existent product"
+        );
+
+        assertEquals("Product with ID 1 not found.", exception.getMessage());
+        verify(orderRepository, never()).save(any());
+    }
+
+    @Test
+    @DisplayName("Scenario: Fail to create order when product has no category")
+    void givenOrderWithProductWithoutCategory_whenCreatingOrder_thenValidationExceptionShouldBeThrown() {
+        // Given: An order with product without category
+        Order order = createValidOrder(null, OrderStatus.SENT);
+        Product productWithoutCategory = createValidProduct();
+        productWithoutCategory.setCategory(null);
+
+        when(productRepository.getById(1L)).thenReturn(productWithoutCategory);
+
+        // When & Then: Creating order should throw ValidationException
+        ValidationException exception = assertThrows(
+            ValidationException.class,
+            () -> orderService.create(order),
+            "Should throw ValidationException for product without category"
+        );
+
+        assertEquals("Product 'Hambúrguer' does not have a category assigned.", exception.getMessage());
+        verify(orderRepository, never()).save(any());
+    }
+
+    @Test
+    @DisplayName("Scenario: Fail to create order when category not found")
+    void givenOrderWithProductFromNonExistentCategory_whenCreatingOrder_thenValidationExceptionShouldBeThrown() {
+        // Given: An order with product from non-existent category
+        Order order = createValidOrder(null, OrderStatus.SENT);
+        Product product = createValidProduct();
+
+        when(productRepository.getById(1L)).thenReturn(product);
+        when(categoryService.getCategoryById(1L)).thenReturn(null);
+
+        // When & Then: Creating order should throw ValidationException
+        ValidationException exception = assertThrows(
+            ValidationException.class,
+            () -> orderService.create(order),
+            "Should throw ValidationException when category not found"
+        );
+
+        assertEquals("Category for product 'Hambúrguer' not found.", exception.getMessage());
+        verify(orderRepository, never()).save(any());
+    }
+
+    @Test
+    @DisplayName("Scenario: Successfully update order status to other status")
+    void givenExistingOrder_whenUpdatingStatusToInPreparation_thenStatusShouldBeUpdated() {
+        // Given: An existing order
+        Order order = createValidOrder(1L, OrderStatus.RECEIVED);
+        when(orderRepository.findById(1L)).thenReturn(order);
+        when(orderRepository.save(any(Order.class))).thenReturn(order);
+
+        // When: Updating status to IN_PREPARATION
+        Order result = orderService.updateStatusOrder(1L, OrderStatus.IN_PREPARATION);
+
+        // Then: Status should be updated
+        assertNotNull(result, "Updated order should not be null");
+        verify(orderRepository, times(1)).findById(1L);
+        verify(orderRepository, times(1)).save(any(Order.class));
     }
 
     // Helper methods
