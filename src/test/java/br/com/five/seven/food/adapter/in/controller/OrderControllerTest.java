@@ -3,6 +3,7 @@ package br.com.five.seven.food.adapter.in.controller;
 import br.com.five.seven.food.adapter.in.mappers.OrderMapper;
 import br.com.five.seven.food.adapter.in.payload.item.ItemRequest;
 import br.com.five.seven.food.adapter.in.payload.order.CreateOrderRequest;
+import br.com.five.seven.food.adapter.in.payload.order.OrderMonitorResponse;
 import br.com.five.seven.food.adapter.in.payload.order.OrderResponse;
 import br.com.five.seven.food.adapter.in.payload.order.UpdateOrderRequest;
 import br.com.five.seven.food.adapter.in.payload.order.UpdateOrderItemsRequest;
@@ -426,6 +427,69 @@ class OrderControllerTest {
         verify(orderService, times(1)).updateOrderItems(anyLong(), any(Order.class));
     }
 
+    // MONITOR TESTS
+
+    @Test
+    @DisplayName("Scenario: Successfully retrieve orders for monitor by status")
+    void givenOrdersWithStatus_whenGettingOrdersForMonitor_thenMonitorResponseShouldBeReturned() {
+        // Given: Orders with specific status
+        Order order = createOrder(1L, OrderStatus.RECEIVED);
+        List<Order> orders = List.of(order);
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<Order> orderPage = new PageImpl<>(orders, pageable, orders.size());
+        OrderMonitorResponse monitorResponse = createOrderMonitorResponse(1L, OrderStatus.RECEIVED);
+
+        when(orderService.findAllByOrderStatus(anyList(), any(Pageable.class))).thenReturn(orderPage);
+        when(orderMapper.domainToMonitorResponse(order)).thenReturn(monitorResponse);
+
+        // When: Getting orders for monitor
+        ResponseEntity<Page<OrderMonitorResponse>> response = orderController.getAllOrdersByStatusForMonitor(
+                List.of(OrderStatus.RECEIVED), pageable);
+
+        // Then: Monitor response should be returned
+        assertNotNull(response);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(1, response.getBody().getContent().size());
+        verify(orderService, times(1)).findAllByOrderStatus(anyList(), any(Pageable.class));
+    }
+
+    @Test
+    @DisplayName("Scenario: Successfully retrieve order by ID for monitor")
+    void givenExistingOrderId_whenGettingOrderByIdForMonitor_thenMonitorResponseShouldBeReturned() throws ValidationException {
+        // Given: An existing order
+        Order order = createOrder(1L, OrderStatus.RECEIVED);
+        OrderMonitorResponse monitorResponse = createOrderMonitorResponse(1L, OrderStatus.RECEIVED);
+
+        when(orderService.findById(1L)).thenReturn(order);
+        when(orderMapper.domainToMonitorResponse(order)).thenReturn(monitorResponse);
+
+        // When: Getting order by ID for monitor
+        ResponseEntity<OrderMonitorResponse> response = orderController.getOrderByIdForMonitor(1L);
+
+        // Then: Monitor response should be returned
+        assertNotNull(response);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(OrderStatus.RECEIVED, response.getBody().getOrderStatus());
+        verify(orderService, times(1)).findById(1L);
+    }
+
+    @Test
+    @DisplayName("Scenario: Return 404 when order not found by ID for monitor")
+    void givenNonExistingOrderId_whenGettingOrderByIdForMonitor_thenNotFoundShouldBeReturned() throws ValidationException {
+        // Given: A non-existing order ID
+        when(orderService.findById(999L)).thenThrow(new RuntimeException("Order not found"));
+
+        // When: Getting order by ID for monitor
+        ResponseEntity<OrderMonitorResponse> response = orderController.getOrderByIdForMonitor(999L);
+
+        // Then: 404 should be returned
+        assertNotNull(response);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        verify(orderService, times(1)).findById(999L);
+    }
+
 
 
     // Helper methods
@@ -457,6 +521,16 @@ class OrderControllerTest {
         OrderResponse response = new OrderResponse();
         response.setId(id);
         response.setOrderStatus(status);
+        return response;
+    }
+
+    private OrderMonitorResponse createOrderMonitorResponse(Long id, OrderStatus status) {
+        OrderMonitorResponse response = new OrderMonitorResponse();
+        response.setTitle("Pedido Monitor");
+        response.setDescription("Descrição");
+        response.setClientCpf("12345678900");
+        response.setOrderStatus(status);
+        response.setTotalAmount(BigDecimal.valueOf(50.00));
         return response;
     }
 }
