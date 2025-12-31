@@ -13,5 +13,3 @@ jobs:
     with:
       app_name: "pos-tech-g57-app-orders"
     secrets: inherit
-
- 
