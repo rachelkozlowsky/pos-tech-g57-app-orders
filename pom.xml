@@ -11,7 +11,7 @@
     </parent>
     <groupId>br.com.five.seven.food</groupId>
     <artifactId>api-food</artifactId>
-    <version>0.0.19</version>
+    <version>0.0.20</version>
     <name>api-food</name>
     <description>Tech Food Five Seven</description>
     <properties>
